@@ -13,8 +13,6 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +28,9 @@ public class Restaurant {
 
 	@NotNull
 	private String restaurantName;
+
+	@NotNull
+	private String manager;
 	
 	@Size(min=10,max=10)
 	private Integer contactNumber;
