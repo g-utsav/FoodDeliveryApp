@@ -8,10 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Data
 @Entity
 public class OrderDetails {
@@ -24,7 +27,7 @@ public class OrderDetails {
 	private Customer customer;
 	
 	private LocalDateTime orderDateTime;
-	
+
 	private String orderStatus;
 
 	

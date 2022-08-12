@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import lombok.Data;
 
 
@@ -21,8 +19,7 @@ public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) 
 	private Integer cartId;
-	
-	//@Autowired
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Item> cartItems;
 	
