@@ -1,4 +1,4 @@
-package com.masai.Entity;
+package com.foodDelivery.entity;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
