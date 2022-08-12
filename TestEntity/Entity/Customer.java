@@ -43,11 +43,11 @@ public class Customer {
 	@Email
 	private String email;
 	
-	@Autowired
+	//@Autowired
 	@OneToOne(cascade = CascadeType.ALL)
 	private Cart cart;
 	
-	@Autowired
+	//@Autowired
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 	

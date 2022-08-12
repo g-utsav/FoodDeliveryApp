@@ -34,11 +34,11 @@ public class Restaurant {
 	@Size(min=10,max=10)
 	private Integer contactNumber;
 	
-	@Autowired
+	//@Autowired
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address ;
 	
-	
+	//@Autowired
 	@ManyToMany(cascade = CascadeType.ALL)
 	List<Item> itemList=new ArrayList<>();
 	
