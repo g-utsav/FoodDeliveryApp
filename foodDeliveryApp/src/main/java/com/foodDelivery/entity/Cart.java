@@ -9,10 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import lombok.Data;
-
-
-@Data
 @Entity
 public class Cart {
 	
@@ -22,9 +18,36 @@ public class Cart {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Item> cartItems;
-	
-	
-	
 
+	public Cart() {
+	}
 
+	public Cart(Integer cartId, List<Item> cartItems) {
+		this.cartId = cartId;
+		this.cartItems = cartItems;
+	}
+
+	public Integer getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(Integer cartId) {
+		this.cartId = cartId;
+	}
+
+	public List<Item> getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(List<Item> cartItems) {
+		this.cartItems = cartItems;
+	}
+
+	@Override
+	public String toString() {
+		return "Cart{" +
+				"cartId=" + cartId +
+				", cartItems=" + cartItems +
+				'}';
+	}
 }

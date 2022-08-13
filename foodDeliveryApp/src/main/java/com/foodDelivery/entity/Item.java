@@ -13,12 +13,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
-@Setter
-@Getter
 public class Item {
 	
 	

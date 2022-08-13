@@ -13,11 +13,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Setter
-@Getter
 @Entity
 public class Restaurant {
 	

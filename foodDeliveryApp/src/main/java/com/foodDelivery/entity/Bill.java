@@ -1,17 +1,10 @@
 package com.foodDelivery.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-
-@Setter
-@Getter
-@Data
 @Entity
 public class Bill {
 

@@ -1,4 +1,4 @@
-package com.foodDelivery.serviceLayer;
+package com.foodDelivery.serviceLayer.Address;
 
 import com.foodDelivery.dataAcessLayer.AddressDao;
 import com.foodDelivery.entity.Address;

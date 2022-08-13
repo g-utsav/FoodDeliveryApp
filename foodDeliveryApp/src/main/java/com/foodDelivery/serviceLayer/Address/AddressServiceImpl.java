@@ -1,11 +1,19 @@
-package com.foodDelivery.serviceLayer;
+package com.foodDelivery.serviceLayer.Address;
 
+import com.foodDelivery.dataAcessLayer.AddressDao;
 import com.foodDelivery.entity.Address;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AddressServiceImpl implements AddressService{
+
+    @Autowired
+    private AddressDao addressDao;
+
+
     @Override
     public Address addAddress(Address address) {
-        return null;
+        addressDao.save(address);
+        return address;
     }
 
     @Override

@@ -7,9 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
 
-@Data
 @Embeddable
 @Entity
 public class Category {
