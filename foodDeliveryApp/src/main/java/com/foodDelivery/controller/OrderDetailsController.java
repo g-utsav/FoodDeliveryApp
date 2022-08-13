@@ -17,11 +17,11 @@ import com.foodDelivery.entity.OrderDetails;
 public class OrderDetailsController {
 
 	@Autowired
-	OrderDetailsService orderSer;
+	OrderDetailsService orderDetailsService;
 	
 	@PostMapping("/AddOrder/{id}")
 	public OrderDetails AddOrderDetails(@Valid @PathVariable("id") Integer id) {
-		return orderSer.AddOrder(id);
+		return orderDetailsService.AddOrder(id);
 	}
 	
 	@DeleteMapping("/removeOrder")
