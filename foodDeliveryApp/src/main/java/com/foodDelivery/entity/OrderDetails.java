@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 
-
 @Entity
 public class OrderDetails {
 	
@@ -24,6 +23,16 @@ public class OrderDetails {
 	private LocalDateTime orderDateTime;
 
 	private String orderStatus;
+
+	public OrderDetails() {
+	}
+
+	public OrderDetails(Integer orderId, Customer customer, LocalDateTime orderDateTime, String orderStatus) {
+		this.orderId = orderId;
+		this.customer = customer;
+		this.orderDateTime = orderDateTime;
+		this.orderStatus = orderStatus;
+	}
 
 	public Integer getOrderId() {
 		return orderId;
@@ -59,25 +68,11 @@ public class OrderDetails {
 
 	@Override
 	public String toString() {
-		return "OrderDetails [orderId=" + orderId + ", customer=" + customer + ", orderDateTime=" + orderDateTime
-				+ ", orderStatus=" + orderStatus + "]";
+		return "OrderDetails{" +
+				"orderId=" + orderId +
+				", customer=" + customer +
+				", orderDateTime=" + orderDateTime +
+				", orderStatus='" + orderStatus + '\'' +
+				'}';
 	}
-
-	public OrderDetails(Integer orderId, Customer customer, LocalDateTime orderDateTime, String orderStatus) {
-		super();
-		this.orderId = orderId;
-		this.customer = customer;
-		this.orderDateTime = orderDateTime;
-		this.orderStatus = orderStatus;
-	}
-
-	public OrderDetails() {
-		super();
-	}
-
-	
-	
-	
-	
-
 }
