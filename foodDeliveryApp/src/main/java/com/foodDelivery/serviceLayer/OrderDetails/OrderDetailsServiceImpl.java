@@ -16,7 +16,7 @@ import com.foodDelivery.entity.OrderDetails;
 public class OrderDetailsServiceImpl implements OrderDetailsService {
 
 	@Autowired
-	OrderDetailsDao orderServ;
+	OrderDetailsDao orderDetailsDao;
 	
 	@Autowired
 	CustomerDao customerDao;
@@ -30,15 +30,15 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 		if(opt.isPresent()) {
 			order.setCustomer((Customer) opt.get());
 		}
-		orderServ.save(order);
+		orderDetailsDao.save(order);
 		return order;
 	}
 	@Override
 	public OrderDetails removeOrderDetails(OrderDetails order) {
-		Optional<OrderDetails> od1=orderServ.findById(order.getOrderId());
+		Optional<OrderDetails> od1=orderDetailsDao.findById(order.getOrderId());
 		
 		if(od1.isPresent()) {
-			orderServ.delete(order);
+			orderDetailsDao.delete(order);
 			return order;
 		}else {
 			throw new OrderDetailsException("Order is not present...");
