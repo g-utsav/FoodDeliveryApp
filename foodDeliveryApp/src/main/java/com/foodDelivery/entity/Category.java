@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-@Data
+//@Data
 @Embeddable
 @Entity
 public class Category {
@@ -21,6 +21,37 @@ public class Category {
 	
 	@NotNull
 	private String categoryName;
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + "]";
+	}
+
+	public Category(String categoryId, @NotNull String categoryName) {
+		super();
+		this.categoryId = categoryId;
+		this.categoryName = categoryName;
+	}
+
+	public Category() {
+		super();
+	}
 	
 	
 
