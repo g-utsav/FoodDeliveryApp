@@ -38,76 +38,7 @@ public class Item {
 	//@Autowired
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy = "itemList")
 	List<Restaurant> restaurantList=new ArrayList<>();
-
-	public Integer getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Integer itemId) {
-		this.itemId = itemId;
-	}
-
-	public String getItemName() {
-		return itemName;
-	}
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	public double getCost() {
-		return cost;
-	}
-
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public List<Restaurant> getRestaurantList() {
-		return restaurantList;
-	}
-
-	public void setRestaurantList(List<Restaurant> restaurantList) {
-		this.restaurantList = restaurantList;
-	}
-
-	@Override
-	public String toString() {
-		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", quantity=" + quantity + ", cost=" + cost
-				+ ", category=" + category + ", restaurantList=" + restaurantList + "]";
-	}
-
-	public Item(Integer itemId, @NotNull String itemName, @Min(1) Integer quantity, @NotNull double cost,
-			Category category, List<Restaurant> restaurantList) {
-		super();
-		this.itemId = itemId;
-		this.itemName = itemName;
-		this.quantity = quantity;
-		this.cost = cost;
-		this.category = category;
-		this.restaurantList = restaurantList;
-	}
-
-	public Item() {
-		super();
-	}
 	
-	
+
 
 }
