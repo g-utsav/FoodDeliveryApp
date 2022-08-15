@@ -19,9 +19,7 @@ public interface ItemService {
 	public Item removeItem (Integer itemId) throws ItemNotFoundException ;
 	
 	public List < Item > viewAllItemsByCategory (String categoryName) throws CategoryNotFound ;
-	
-//	List < Item > viewAllItemsByResturant (String resturantName);
-	
+		
 	public List < Item > viewAllItemsByItemname (String itemName) throws ItemNotFoundException ;
 
 }

@@ -24,7 +24,7 @@ public class CategoryController {
 	@Autowired
 	private CategoryService cService;
 	
-	@PostMapping("/")
+	@PostMapping("/addCategory")
 	public ResponseEntity<Category> addCategoryHandler(@Valid @RequestBody Category category )  throws CategoryException{
 		
 		return new ResponseEntity<>(cService.addCategory(category),HttpStatus.CREATED);

@@ -1,6 +1,6 @@
 package com.foodDelivery.exceptions;
 
-public class ItemException extends RuntimeException {
+public class ItemException extends Exception {
 
 	public ItemException() {
 	
