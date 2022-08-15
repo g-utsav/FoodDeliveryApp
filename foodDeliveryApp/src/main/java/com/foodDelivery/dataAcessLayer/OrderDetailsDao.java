@@ -13,8 +13,16 @@ import com.foodDelivery.entity.OrderDetails;
 @Repository
 public interface OrderDetailsDao extends JpaRepository<OrderDetails, Integer> {
 
-	@Query("from OrderDetails od where od.customer.customerId=?1")
-	public List<OrderDetails> findOrderByCustomerId(Integer id);
+	@Query("from OrderDetails od where od.customer=(from Customer where customerId=?1)")
+	public List<OrderDetails> findAllOrderByCustomerId(Integer id);
+	
+	
+	@Query("from OrderDetails od where od.customer.customerId=?1 AND od.orderStatus='Pending'")
+	public List<OrderDetails> findPendingOrder(Integer custId);
+
+
+
+   //select customerId from OrderDetails od where od.customerId=?1 
 	
 
 }
