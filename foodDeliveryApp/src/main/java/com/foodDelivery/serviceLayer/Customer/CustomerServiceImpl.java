@@ -1,13 +1,17 @@
 package com.foodDelivery.serviceLayer.Customer;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.foodDelivery.dataAcessLayer.AddressDao;
 import com.foodDelivery.dataAcessLayer.CustomerDao;
 import com.foodDelivery.entity.Customer;
 import com.foodDelivery.exceptions.CustomerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import com.foodDelivery.exceptions.UnAuthorizedCustomerException;
+import com.foodDelivery.exceptions.UserAllReadyLoggedInException;
+import com.foodDelivery.serviceLayer.logIn.GetCurrentLoginUserSessionDetailsImpl;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -17,6 +21,9 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Autowired
     private CustomerDao customerDao;
+    
+	@Autowired
+	private GetCurrentLoginUserSessionDetailsImpl getCurrentLoginUser;
 
 
     @Override
@@ -70,5 +77,37 @@ public class CustomerServiceImpl implements CustomerService{
             throw new CustomerException("Customer Not Exists...");
         }
     }
+    
+	@Override
+	public Customer createCustomer(Customer customer) throws UserAllReadyLoggedInException {
+		
+		Optional<Customer> opt = customerDao.findByMobileNumber(customer.getMobileNumber());
+		
+		if(opt.isPresent()) {
+			System.out.println("User Already Exist");
+			
+			throw new UserAllReadyLoggedInException("User allready logged in with this Mobile Number ");
+		}
+		
+		return customerDao.save(customer);
+		
+	}
+	
+	@Override
+	public Customer updateCustomer(Customer customer, String key) throws UnAuthorizedCustomerException, UserAllReadyLoggedInException {
+		
+		Customer customer2 = getCurrentLoginUser.getCurrentCustomer(key);
+		
+		if(customer2==null) {
+//			System.out.println("No User found.. try Login first");
+			
+			throw new UserAllReadyLoggedInException("No User found.. try Login first");
+		}
+		customer.setCustomerId(customer2.getCustomerId());
+		 customerDao.save(customer);
+		
+		 return customer;
+	}
+	
 
 }
