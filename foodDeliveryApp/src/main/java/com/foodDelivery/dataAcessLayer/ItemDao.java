@@ -15,13 +15,7 @@ public interface ItemDao extends JpaRepository<Item,Integer> {
 	
 	@Query("from Item i where i.category.categoryName=?1")
 	public List<Item> findItemByCategoryName(String categoryName); 
-//	Item addItem (Item item) Admin
-//	Item updateItem (Item Item) Admin
-//	Item viewItem (Integer itemId) Admin
-//	Item remove Item (Integer itemId) Admin
-//	List < Item > viewAllItemsByCategory (String categoryName) User / Admin
-//	List < Item > viewAllItemsByResturant (String resturantName) User / Admin
-//	List < Item > viewAllItemsByItemname (String itemName) User / Admin
+
 	
 	
 }

@@ -25,9 +25,6 @@ public class Item {
 	@NotNull
 	private String itemName;
 	
-	@Min(1)
-	private Integer quantity;
-	
 	@NotNull
 	private double cost;
 	
@@ -38,7 +35,55 @@ public class Item {
 	//@Autowired
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy = "itemList")
 	List<Restaurant> restaurantList=new ArrayList<>();
+
+	public Integer getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public double getCost() {
+		return cost;
+	}
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Item() {
+		super();
+	}
+
+	public List<Restaurant> getRestaurantList() {
+		return restaurantList;
+	}
+
+	public void setRestaurantList(List<Restaurant> restaurantList) {
+		this.restaurantList = restaurantList;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", cost=" + cost + ", category=" + category
+				+ ", restaurantList=" + restaurantList + "]";
+	}
 	
-
-
 }
