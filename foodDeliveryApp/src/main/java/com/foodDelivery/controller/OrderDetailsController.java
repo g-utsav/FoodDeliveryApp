@@ -29,7 +29,7 @@ import com.foodDelivery.exceptions.OrderNotFoundException;
 public class OrderDetailsController {
 
 	@Autowired
-	OrderDetailsService orderDetailsService;
+	private OrderDetailsService orderDetailsService;
 	
 	@PostMapping("/AddOrder")
 	public ResponseEntity<OrderDetails> AddOrderDetails(@Valid @RequestBody Customer customer) throws CustomerNotFoundException {

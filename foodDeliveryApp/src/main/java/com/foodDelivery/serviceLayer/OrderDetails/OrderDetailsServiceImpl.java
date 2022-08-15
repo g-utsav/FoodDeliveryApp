@@ -22,7 +22,7 @@ import com.foodDelivery.entity.OrderDetails;
 public class OrderDetailsServiceImpl implements OrderDetailsService {
 
 	@Autowired
-	OrderDetailsDao orderDetailsDao;
+	private OrderDetailsDao orderDetailsDao;
 	
 
 
