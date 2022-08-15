@@ -33,12 +33,12 @@ public class BillController {
 	}
 	
 	@PutMapping(value = "/")
-	public ResponseEntity<Bill> updateBillHandler(@RequestBody Bill bill){
+	public ResponseEntity<Bill> updateBillHandler(@RequestBody Bill bill) throws BillException{
 		return new ResponseEntity<>(billService.updateBill(bill),HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Bill> removeBillHandler(@PathVariable ("id") Integer id){
+	public ResponseEntity<Bill> removeBillHandler(@PathVariable ("id") Integer id) throws BillException{
 		return new ResponseEntity<>(billService.removeBill(id),HttpStatus.OK);
 	}
 	
