@@ -28,11 +28,9 @@ public class Item {
 	@NotNull
 	private double cost;
 	
-	//@Autowired
 	@OneToOne(cascade = CascadeType.ALL)
 	private Category category;
 	
-	//@Autowired
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy = "itemList")
 	List<Restaurant> restaurantList=new ArrayList<>();
 
