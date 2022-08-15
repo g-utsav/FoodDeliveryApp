@@ -14,25 +14,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodDelivery.entity.Restaurant;
+import com.foodDelivery.entity.dto.RestaurantDto;
+import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
 import com.foodDelivery.exceptions.MultipleRestaurantFoundException;
 import com.foodDelivery.exceptions.NoRestaurantFoundException;
 import com.foodDelivery.exceptions.RestaurantException;
 import com.foodDelivery.serviceLayer.ResturantService;
+import com.foodDelivery.serviceLayer.admin.AdminService;
 
 @RestController
 @RequestMapping("/Restaurant")
 public class RestaurantController {
 
 	@Autowired
-	ResturantService rServ;
+	private ResturantService rServ;
+	
+	@Autowired
+	private AdminService aServ;
 	
 	@PostMapping("/")
-	public ResponseEntity<Restaurant> addRestaurantHandler(@Valid @RequestBody Restaurant restaurant) throws RestaurantException{
-		return new ResponseEntity<>(rServ.addRestaurant(restaurant), HttpStatus.ACCEPTED);
+	public ResponseEntity<Restaurant> addRestaurantHandler(@Valid @RequestBody RestaurantDto restaurantDto) throws RestaurantException,AdminAcessNotGrantedException{
+
+			if(!aServ.verifyAdmin(restaurantDto.getCustomerToken(), restaurantDto.getCustomerToken().getCustId())) ;
+			return new ResponseEntity<>(rServ.addRestaurant(restaurantDto.getRestaurant()), HttpStatus.ACCEPTED);
 	}
 	
 	@PutMapping("/{token}")

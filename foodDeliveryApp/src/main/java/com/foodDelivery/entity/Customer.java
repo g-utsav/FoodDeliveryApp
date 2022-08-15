@@ -9,6 +9,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern;
 
 
 
@@ -37,6 +39,10 @@ public class Customer {
 	
 	@Email
 	private String email;
+	
+	@NotNull
+//	@Pattern(regexp="^(?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$")
+	private String password;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
@@ -47,7 +53,24 @@ public class Customer {
 	public Customer() {
 	}
 
-	public Customer(Integer customerId, String firstName, String lastName, Integer age, String gender, Long mobileNumber, String email, Address address, Cart cart) {
+//	public Customer(Integer customerId, String firstName, String lastName, Integer age, String gender, Long mobileNumber, String email, Address address, Cart cart) {
+//		this.customerId = customerId;
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.age = age;
+//		this.gender = gender;
+//		this.mobileNumber = mobileNumber;
+//		this.email = email;
+//		this.address = address;
+//		this.cart = cart;
+//	}
+//	
+
+	public Customer(Integer customerId, @NotNull String firstName, @NotNull String lastName,
+			@NotNull @Min(15) Integer age, @NotNull String gender, Long mobileNumber, @Email String email,
+			@NotNull @Pattern(regexp = "^(?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$") String password,
+			Address address, Cart cart) {
+		super();
 		this.customerId = customerId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -55,8 +78,17 @@ public class Customer {
 		this.gender = gender;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
+		this.password = password;
 		this.address = address;
 		this.cart = cart;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Integer getCustomerId() {

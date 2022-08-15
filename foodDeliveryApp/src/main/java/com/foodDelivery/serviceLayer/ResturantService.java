@@ -19,4 +19,7 @@ public interface ResturantService {
 	
 	public List<Restaurant> viewRestaurantByName(String restaurantName)throws NoRestaurantFoundException;
 	
+
+	
+	//viewRestaurantById, viewAllRestaurant, viewItemsByRestaurantId
 }
