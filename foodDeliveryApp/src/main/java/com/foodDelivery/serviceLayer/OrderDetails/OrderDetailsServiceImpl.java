@@ -1,6 +1,9 @@
 package com.foodDelivery.serviceLayer.OrderDetails;
 
 import java.time.LocalDateTime;
+
+import java.util.List;
+
 import java.util.Optional;
 
 import com.foodDelivery.dataAcessLayer.CustomerDao;
@@ -46,6 +49,18 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 		
 	
 	}
+
+	@Override
+	public List<OrderDetails> viewOrder() {
+		List<OrderDetails> list=orderDetailsDao.findAll();
+		return list;
+	}
+	@Override
+	public List<OrderDetails> viewAllOrderByCustomer(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 
