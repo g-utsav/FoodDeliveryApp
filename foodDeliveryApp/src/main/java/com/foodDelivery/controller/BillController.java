@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.foodDelivery.entity.Bill;
 import com.foodDelivery.entity.Customer;
+import com.foodDelivery.entity.dto.BillDto;
+import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
 import com.foodDelivery.exceptions.BillException;
 import com.foodDelivery.serviceLayer.Bill.BillService;
+import com.foodDelivery.serviceLayer.admin.AdminService;
 
 @RestController
 @RequestMapping("/bill")
@@ -27,6 +30,9 @@ public class BillController {
   
 	@Autowired
 	private BillService billService;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@PostMapping(value = "/genrate")
 	public ResponseEntity<Bill> genrateBillHandler(@RequestBody Customer customer){
@@ -39,7 +45,9 @@ public class BillController {
 	}
 	
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Bill> removeBillHandler(@PathVariable ("id") Integer id) throws BillException{
+	public ResponseEntity<Bill> removeBillHandler(@PathVariable ("id") Integer id,@RequestBody BillDto billDto) throws BillException,AdminAcessNotGrantedException{
+		if(!adminService.verifyAdmin(billDto.getCustomerToken(), billDto.getCustomerToken().getCustId())) ;
+		
 		return new ResponseEntity<>(billService.removeBill(id),HttpStatus.OK);
 	}
 	
@@ -48,8 +56,13 @@ public class BillController {
 		return new ResponseEntity<>(billService.viewBillsByDate(startDate, endDate),HttpStatus.FOUND);
 	}
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/customerId={id}")
 	public ResponseEntity<List<Bill>> getBillByCustomerId(@PathVariable ("id") Integer id){
 		return new ResponseEntity<>(billService.viewBills(id),HttpStatus.FOUND);
+	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Bill> getBillById(@PathVariable ("id") Integer id) throws BillException{
+		return new ResponseEntity<>(billService.viewBill(id),HttpStatus.FOUND);
 	}
 }
