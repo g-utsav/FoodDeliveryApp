@@ -32,7 +32,11 @@ public class OrderDetailsController {
 	OrderDetailsService orderDetailsService;
 	
 	@PostMapping("/AddOrder")
+<<<<<<< Updated upstream
 	public ResponseEntity<OrderDetails> AddOrderDetails(@Valid @RequestBody Customer customer) throws CustomerNotFoundException {
+=======
+	public ResponseEntity<OrderDetails> AddOrderDetails(@Valid @RequestBody Customer customer) throws CustomerNotFoundException{
+>>>>>>> Stashed changes
 		return new ResponseEntity<OrderDetails>(orderDetailsService.AddOrder(customer),HttpStatus.ACCEPTED);
 	}
 	
