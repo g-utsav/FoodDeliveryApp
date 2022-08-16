@@ -50,7 +50,7 @@ public class OrderDetailsController {
 	
 
 	@PostMapping("/")
-	public ResponseEntity<OrderDetails> AddOrderDetailsHandler(@Valid @RequestBody CustomerDTOForHttpRequest cDtoHttp) throws UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+	public ResponseEntity<OrderDetails> AddOrderDetailsHandler(@Valid @RequestBody CustomerDTOForHttpRequest cDtoHttp) throws UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException, CustomerNotFoundException {
 		if(adminServ.verifyUser(cDtoHttp.getcToken())) ;
 		return new ResponseEntity<OrderDetails> (orderDetailsService.AddOrder(cDtoHttp.getCustomer()),HttpStatus.ACCEPTED);
 

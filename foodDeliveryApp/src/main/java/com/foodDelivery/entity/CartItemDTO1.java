@@ -5,7 +5,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class ItemDTO {
+public class CartItemDTO1 {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -35,10 +35,10 @@ public class ItemDTO {
     @ManyToOne
     private Cart cart;
 
-    public ItemDTO() {
+    public CartItemDTO1() {
     }
 
-    public ItemDTO(Integer itemDTOId, Integer restaurantId, Integer itemId, String itemName, String categoryName, String resturantName, Double cost, Integer quantity) {
+    public CartItemDTO1(Integer itemDTOId, Integer restaurantId, Integer itemId, String itemName, String categoryName, String resturantName, Double cost, Integer quantity) {
         this.itemDTOId = itemDTOId;
         this.restaurantId = restaurantId;
         this.itemId = itemId;
