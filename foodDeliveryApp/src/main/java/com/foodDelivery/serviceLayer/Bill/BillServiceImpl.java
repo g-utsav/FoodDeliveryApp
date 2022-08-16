@@ -86,4 +86,15 @@ public class BillServiceImpl implements BillService{
 		return bills;
 	}
 
+	@Override
+	public Bill viewBill(Integer billId) throws BillException {
+		
+		Optional<Bill> opt = billDao.findById(billId);
+		
+		if(opt.isPresent())
+			return opt.get();
+		else
+			throw new BillException("Bill not Found with id : "+billId);
+	}
+
 }

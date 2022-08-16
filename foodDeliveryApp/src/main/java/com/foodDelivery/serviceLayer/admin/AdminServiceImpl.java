@@ -3,6 +3,7 @@ package com.foodDelivery.serviceLayer.admin;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.session.NonUniqueSessionRepositoryException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,9 @@ import com.foodDelivery.entity.dto.AdminDto;
 import com.foodDelivery.entity.dto.CustomerToken;
 import com.foodDelivery.entity.dto.RestaurantDto;
 import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
+import com.foodDelivery.exceptions.UserAccessNotGrantedException;
 import com.foodDelivery.exceptions.UserNotFound;
+import com.foodDelivery.exceptions.UserNotLoggedInException;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -109,6 +112,21 @@ public class AdminServiceImpl implements AdminService{
 		}
 		
 		throw new AdminAcessNotGrantedException("Access Denied!");
+	}
+	
+	public boolean verifyUser(CustomerToken cToken) throws UserAccessNotGrantedException,UserNotFound,UserNotLoggedInException{
+		
+		Optional<Customer> opt = cDao.findById(cToken.getCustId());
+		if(!opt.isPresent()) {
+			throw new UserNotFound("No user Found. SignIn First");
+		}
+		
+		Optional<CurrentUserSession> cus = sDao.findByUuid(cToken.getToken());
+		if(!cus.isPresent()) {
+			throw new UserNotLoggedInException("User is Not Logged In! Login First!.");
+		}
+		
+		return true;
 	}
 	
 }
