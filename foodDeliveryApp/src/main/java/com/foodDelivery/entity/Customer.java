@@ -10,36 +10,34 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Pattern;
-
 
 
 @Entity
 public class Customer {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO) 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer customerId;
-	
+
 	@NotNull
 	private String firstName;
-	
+
 	@NotNull
 	private String lastName;
-	
+
 	@NotNull
 	@Min(15)
 	private Integer age;
-	
+
 	@NotNull
 	private String gender;
-	
+
 	//@Size(min=10,max=10)
-    private Long mobileNumber;
-	
+	private Long mobileNumber;
+
 	@Email
 	private String email;
-	
+
 	@NotNull
 	//@Pattern(regexp="^(?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$")
 	@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})")
@@ -58,24 +56,24 @@ public class Customer {
 
 
 
-	
+
 
 	public Customer(Integer customerId, @NotNull String firstName, @NotNull String lastName, @NotNull @Min(15) Integer age,
-		@NotNull String gender, Long mobileNumber, @Email String email,
-		@NotNull @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})") String password,
-		Address address, Cart cart) {
-	super();
-	this.customerId = customerId;
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.age = age;
-	this.gender = gender;
-	this.mobileNumber = mobileNumber;
-	this.email = email;
-	this.password = password;
-	this.address = address;
-	this.cart = cart;
-}
+					@NotNull String gender, Long mobileNumber, @Email String email,
+					@NotNull @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})") String password,
+					Address address, Cart cart) {
+		super();
+		this.customerId = customerId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.gender = gender;
+		this.mobileNumber = mobileNumber;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.cart = cart;
+	}
 
 	public String getPassword() {
 		return password;

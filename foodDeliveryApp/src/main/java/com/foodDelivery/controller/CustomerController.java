@@ -1,6 +1,7 @@
 package com.foodDelivery.controller;
 
 import com.foodDelivery.entity.Customer;
+import com.foodDelivery.serviceLayer.Cart.CartService;
 import com.foodDelivery.serviceLayer.Customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private CartService cartService;
 
     @GetMapping (value = "/view/{id}")
     public ResponseEntity<Customer> getCustomerHandler(@PathVariable ("id") Integer id){

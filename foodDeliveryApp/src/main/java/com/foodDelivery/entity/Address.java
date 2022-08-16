@@ -34,13 +34,13 @@ public class Address {
 	private String country;
 	
 	@Size(min=6,max=6)
-	private String pincode;
+	private Integer pincode;
 
 
 	public Address() {
 	}
 
-	public Address(Integer addressId, String buildingName, String streetNo, String area, String city, String state, String country, String pincode) {
+	public Address(Integer addressId, String buildingName, String streetNo, String area, String city, String state, String country, Integer pincode) {
 		this.addressId = addressId;
 		this.buildingName = buildingName;
 		this.streetNo = streetNo;
@@ -107,11 +107,11 @@ public class Address {
 		this.country = country;
 	}
 
-	public String getPincode() {
+	public Integer getPincode() {
 		return pincode;
 	}
 
-	public void setPincode(String pincode) {
+	public void setPincode(Integer pincode) {
 		this.pincode = pincode;
 	}
 

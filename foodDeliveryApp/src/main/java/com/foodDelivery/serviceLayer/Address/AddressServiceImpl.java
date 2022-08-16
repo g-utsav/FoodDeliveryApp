@@ -3,7 +3,9 @@ package com.foodDelivery.serviceLayer.Address;
 import com.foodDelivery.dataAcessLayer.AddressDao;
 import com.foodDelivery.entity.Address;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AddressServiceImpl implements AddressService{
 
     @Autowired
