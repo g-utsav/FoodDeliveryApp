@@ -16,4 +16,5 @@ public interface BillService {
     public Bill removeBill(Integer billId) throws BillException;
     public List<Bill> viewBillsByDate(LocalDateTime startDate, LocalDateTime endDate);
     public List<Bill> viewBills(Integer customerId);
+    public Bill viewBill(Integer billId) throws BillException;
 }
