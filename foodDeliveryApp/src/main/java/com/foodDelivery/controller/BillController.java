@@ -21,6 +21,9 @@ import com.foodDelivery.entity.Customer;
 import com.foodDelivery.entity.dto.BillDto;
 import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
 import com.foodDelivery.exceptions.BillException;
+import com.foodDelivery.exceptions.UserAccessNotGrantedException;
+import com.foodDelivery.exceptions.UserNotFound;
+import com.foodDelivery.exceptions.UserNotLoggedInException;
 import com.foodDelivery.serviceLayer.Bill.BillService;
 import com.foodDelivery.serviceLayer.admin.AdminService;
 
@@ -35,13 +38,15 @@ public class BillController {
 	private AdminService adminService;
 	
 	@PostMapping(value = "/genrate")
-	public ResponseEntity<Bill> genrateBillHandler(@RequestBody Customer customer){
-		return new ResponseEntity<>(billService.genrateBill(customer),HttpStatus.ACCEPTED);
+	public ResponseEntity<Bill> genrateBillHandler(@RequestBody BillDto billDto) throws UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+		if(!adminService.verifyUser(billDto.getCustomerToken()));
+		return new ResponseEntity<>(billService.genrateBill(billDto.getCustomer()),HttpStatus.ACCEPTED);
 	}
 	
 	@PutMapping(value = "/")
-	public ResponseEntity<Bill> updateBillHandler(@RequestBody Bill bill) throws BillException{
-		return new ResponseEntity<>(billService.updateBill(bill),HttpStatus.ACCEPTED);
+	public ResponseEntity<Bill> updateBillHandler(@RequestBody BillDto billDto) throws BillException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+		if(!adminService.verifyUser(billDto.getCustomerToken()));
+		return new ResponseEntity<>(billService.updateBill(billDto.getBill()),HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping(value = "/{id}")
@@ -52,17 +57,20 @@ public class BillController {
 	}
 	
 	@GetMapping(value = "/")
-	public ResponseEntity<List<Bill>> getBillsByDate(@RequestParam LocalDateTime startDate,@RequestParam LocalDateTime endDate){
+	public ResponseEntity<List<Bill>> getBillsByDate(@RequestParam LocalDateTime startDate,@RequestParam LocalDateTime endDate,@RequestBody BillDto billDto) throws UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+		if(!adminService.verifyUser(billDto.getCustomerToken()));
 		return new ResponseEntity<>(billService.viewBillsByDate(startDate, endDate),HttpStatus.FOUND);
 	}
 	
 	@GetMapping(value = "/customerId={id}")
-	public ResponseEntity<List<Bill>> getBillByCustomerId(@PathVariable ("id") Integer id){
+	public ResponseEntity<List<Bill>> getBillByCustomerId(@PathVariable ("id") Integer id,@RequestBody BillDto billDto) throws UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+		if(!adminService.verifyUser(billDto.getCustomerToken()));
 		return new ResponseEntity<>(billService.viewBills(id),HttpStatus.FOUND);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Bill> getBillById(@PathVariable ("id") Integer id) throws BillException{
+	public ResponseEntity<Bill> getBillById(@PathVariable ("id") Integer id,@RequestBody BillDto billDto) throws BillException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+		if(!adminService.verifyUser(billDto.getCustomerToken()));
 		return new ResponseEntity<>(billService.viewBill(id),HttpStatus.FOUND);
 	}
 }
