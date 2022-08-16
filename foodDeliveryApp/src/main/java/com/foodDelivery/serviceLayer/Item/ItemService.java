@@ -20,6 +20,6 @@ public interface ItemService {
 	
 	public List < Item > viewAllItemsByCategory (String categoryName) throws CategoryNotFound ;
 		
-	public List < Item > viewAllItemsByItemname (String itemName) throws ItemNotFoundException ;
+	public List < Item > viewAllItemsByItemName (String itemName) throws ItemNotFoundException ;
 
 }
