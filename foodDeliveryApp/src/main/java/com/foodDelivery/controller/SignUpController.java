@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,7 @@ import com.foodDelivery.serviceLayer.Customer.CustomerServiceImpl;
 //import com.masai.UserLogin.exception.UserAllReadyLoggedInException;
 
 @RestController
+@RequestMapping("/signup")
 public class SignUpController {
 	
 	@Autowired
@@ -27,7 +29,7 @@ public class SignUpController {
 	
 	//to Register user
 	
-	@PostMapping(value = "/customer")
+	@PostMapping(value = "/")
 	public Customer saveCustomer(@Valid @RequestBody Customer customer) throws UserAllReadyLoggedInException {
 		
 		return customerServiceImpl.createCustomer(customer);
@@ -35,7 +37,7 @@ public class SignUpController {
 	
 	//to update existing
 	
-	@PutMapping(value = "/customer")
+	@PutMapping(value = "/")
 	public Customer UpdateCustomer(@Valid @RequestBody Customer customer,@RequestParam(required = false) String key) throws UnAuthorizedCustomerException, UserAllReadyLoggedInException {
 		
 		return customerServiceImpl.updateCustomer(customer,key);                                                   
