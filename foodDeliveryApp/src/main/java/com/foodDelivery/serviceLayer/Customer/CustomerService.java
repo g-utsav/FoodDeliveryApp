@@ -2,8 +2,8 @@ package com.foodDelivery.serviceLayer.Customer;
 
 import com.foodDelivery.entity.Customer;
 import com.foodDelivery.exceptions.CustomerException;
-
-import java.util.List;
+import com.foodDelivery.exceptions.UnAuthorizedCustomerException;
+import com.foodDelivery.exceptions.UserAllReadyLoggedInException;
 
 public interface CustomerService {
 
@@ -14,6 +14,11 @@ public interface CustomerService {
     public Customer removeCustomer (Integer id) throws CustomerException;
 
     public Customer viewCustomer (Integer id) throws CustomerException;
+    
+    public Customer createCustomer(Customer customer) throws UserAllReadyLoggedInException;
+    
+	public Customer updateCustomer(Customer customer, String key) throws UnAuthorizedCustomerException, UserAllReadyLoggedInException;
+	
 
 
 }
