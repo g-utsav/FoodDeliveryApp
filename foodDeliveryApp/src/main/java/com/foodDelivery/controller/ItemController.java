@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodDelivery.entity.Item;
-import com.foodDelivery.entity.dto.ItemDTO;
+import com.foodDelivery.entity.dto.CartItemDTO;
 import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
 import com.foodDelivery.exceptions.CategoryNotFound;
 import com.foodDelivery.exceptions.ItemAlreadyPresentException;
@@ -40,38 +40,38 @@ public class ItemController {
 	private AdminService aServ;
 	
 	@PostMapping("/")
-	public ResponseEntity<Item>  addItemHandler(@Valid @RequestBody ItemDTO itemDTO) throws ItemAlreadyPresentException,AdminAcessNotGrantedException{
-		if(aServ.verifyAdmin(itemDTO.getCustomerToken(), itemDTO.getCustomerToken().getCustId())) ;
-		return  new ResponseEntity <> (itemService.addItem(itemDTO.getItem()),HttpStatus.CREATED);
+	public ResponseEntity<Item>  addItemHandler(@Valid @RequestBody CartItemDTO cartItemDTO) throws ItemAlreadyPresentException,AdminAcessNotGrantedException{
+		if(aServ.verifyAdmin(cartItemDTO.getCustomerToken(), cartItemDTO.getCustomerToken().getCustId())) ;
+		return  new ResponseEntity <> (itemService.addItem(cartItemDTO.getItem()),HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/")
-	public ResponseEntity<Item> updateItemHandler (@Valid @RequestBody ItemDTO itemDTO) throws ItemNotFoundException, MultipleItemFoundException,AdminAcessNotGrantedException {
-		if(aServ.verifyAdmin(itemDTO.getCustomerToken(), itemDTO.getCustomerToken().getCustId())) ;
-		return new ResponseEntity<>(itemService.updateItem(itemDTO.getItem()),HttpStatus.ACCEPTED); 
+	public ResponseEntity<Item> updateItemHandler (@Valid @RequestBody CartItemDTO cartItemDTO) throws ItemNotFoundException, MultipleItemFoundException,AdminAcessNotGrantedException {
+		if(aServ.verifyAdmin(cartItemDTO.getCustomerToken(), cartItemDTO.getCustomerToken().getCustId())) ;
+		return new ResponseEntity<>(itemService.updateItem(cartItemDTO.getItem()),HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{itemId}")
-	public ResponseEntity<Item> viewItemHandler (@Valid @RequestBody ItemDTO itemDTO, @PathVariable("itemId") Integer itemId) throws ItemNotFoundException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
-		if(aServ.verifyUser(itemDTO.getCustomerToken())) ;
+	public ResponseEntity<Item> viewItemHandler (@Valid @RequestBody CartItemDTO cartItemDTO, @PathVariable("itemId") Integer itemId) throws ItemNotFoundException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+		if(aServ.verifyUser(cartItemDTO.getCustomerToken())) ;
 		return new ResponseEntity<> (itemService.viewItem(itemId),HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/{itemId}")
-	public ResponseEntity<Item> removeItemHandler(@Valid @RequestBody ItemDTO itemDTO, @PathVariable("itemId") Integer itemId) throws ItemNotFoundException,AdminAcessNotGrantedException{
-		if(aServ.verifyAdmin(itemDTO.getCustomerToken(), itemDTO.getCustomerToken().getCustId())) ;
+	public ResponseEntity<Item> removeItemHandler(@Valid @RequestBody CartItemDTO cartItemDTO, @PathVariable("itemId") Integer itemId) throws ItemNotFoundException,AdminAcessNotGrantedException{
+		if(aServ.verifyAdmin(cartItemDTO.getCustomerToken(), cartItemDTO.getCustomerToken().getCustId())) ;
 		return new ResponseEntity<> (itemService.removeItem(itemId),HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{itemName}")
-	public ResponseEntity<List<Item>> viewAllItemsByItemNameHandler(@Valid @RequestBody ItemDTO itemDTO, @PathVariable("itemName") String itemName) throws ItemNotFoundException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
-		if(aServ.verifyUser(itemDTO.getCustomerToken())) ;
+	public ResponseEntity<List<Item>> viewAllItemsByItemNameHandler(@Valid @RequestBody CartItemDTO cartItemDTO, @PathVariable("itemName") String itemName) throws ItemNotFoundException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+		if(aServ.verifyUser(cartItemDTO.getCustomerToken())) ;
 		return new ResponseEntity<List<Item>> (itemService.viewAllItemsByItemName(itemName),HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{categoryName}")
-	public ResponseEntity<List<Item>> viewAllItemsByCategoryHandler (@Valid @RequestBody ItemDTO itemDTO,@PathVariable("categoryName")String categoryName) throws CategoryNotFound, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
-		if(aServ.verifyUser(itemDTO.getCustomerToken())) ;
+	public ResponseEntity<List<Item>> viewAllItemsByCategoryHandler (@Valid @RequestBody CartItemDTO cartItemDTO, @PathVariable("categoryName")String categoryName) throws CategoryNotFound, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+		if(aServ.verifyUser(cartItemDTO.getCustomerToken())) ;
 		return new ResponseEntity<List<Item>> (itemService.viewAllItemsByCategory(categoryName),HttpStatus.ACCEPTED);
 	}
 	

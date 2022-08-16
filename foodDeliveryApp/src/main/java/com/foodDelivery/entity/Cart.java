@@ -17,12 +17,12 @@ public class Cart {
 	private Integer cartId;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Item> cartItems;
+	private List<ItemDTO> cartItems;
 
 	public Cart() {
 	}
 
-	public Cart(Integer cartId, List<Item> cartItems) {
+	public Cart(Integer cartId, List<ItemDTO> cartItems) {
 		this.cartId = cartId;
 		this.cartItems = cartItems;
 	}
@@ -35,11 +35,11 @@ public class Cart {
 		this.cartId = cartId;
 	}
 
-	public List<Item> getCartItems() {
+	public List<ItemDTO> getCartItems() {
 		return cartItems;
 	}
 
-	public void setCartItems(List<Item> cartItems) {
+	public void setCartItems(List<ItemDTO> cartItems) {
 		this.cartItems = cartItems;
 	}
 

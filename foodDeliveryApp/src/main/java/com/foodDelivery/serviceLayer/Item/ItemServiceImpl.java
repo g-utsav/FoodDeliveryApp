@@ -80,7 +80,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public List<Item> viewAllItemsByItemname(String itemName) throws ItemNotFoundException {
+	public List<Item> viewAllItemsByItemName(String itemName) throws ItemNotFoundException {
 		// TODO Auto-generated method stub
 		List <Item> item  = iDao.findByItemName(itemName);
 		if (item.size()==0) {

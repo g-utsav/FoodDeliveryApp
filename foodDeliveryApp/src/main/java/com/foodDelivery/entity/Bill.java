@@ -4,7 +4,6 @@ package com.foodDelivery.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
 
 import java.time.LocalDateTime;
 

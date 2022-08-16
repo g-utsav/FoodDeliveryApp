@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.foodDelivery.entity.ItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.foodDelivery.dataAcessLayer.BillDao;
 import com.foodDelivery.entity.Bill;
 import com.foodDelivery.entity.Customer;
-import com.foodDelivery.entity.Item;
 import com.foodDelivery.exceptions.BillException;
 
 
@@ -27,8 +27,9 @@ public class BillServiceImpl implements BillService{
     	 bill.setTotalItems(customer.getCart().getCartItems().size());
     	 bill.setBillDateTime(LocalDateTime.now());
     	 Double totalCost = (double) 0;
-    	 List<Item> items = customer.getCart().getCartItems();
-    	 for(Item  i:items) {
+    	 List<ItemDTO> items = customer.getCart().getCartItems();		//List<ItemDTO>
+
+    	 for(ItemDTO i:items) {
     		 totalCost += i.getCost();
     	 }
 		 bill.setTotalCost(totalCost);
