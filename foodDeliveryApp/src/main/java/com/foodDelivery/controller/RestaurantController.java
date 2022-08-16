@@ -22,11 +22,14 @@ import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
 import com.foodDelivery.exceptions.MultipleRestaurantFoundException;
 import com.foodDelivery.exceptions.NoRestaurantFoundException;
 import com.foodDelivery.exceptions.RestaurantException;
+import com.foodDelivery.exceptions.UserAccessNotGrantedException;
+import com.foodDelivery.exceptions.UserNotFound;
+import com.foodDelivery.exceptions.UserNotLoggedInException;
 import com.foodDelivery.serviceLayer.ResturantService;
 import com.foodDelivery.serviceLayer.admin.AdminService;
 
 @RestController
-@RequestMapping("/Restaurant")
+@RequestMapping("/restaurant")
 public class RestaurantController {
 
 	@Autowired
@@ -37,29 +40,32 @@ public class RestaurantController {
 	
 	@PostMapping("/")
 	public ResponseEntity<Restaurant> addRestaurantHandler(@Valid @RequestBody RestaurantDto restaurantDto) throws RestaurantException,AdminAcessNotGrantedException{
-
-			if(!aServ.verifyAdmin(restaurantDto.getCustomerToken(), restaurantDto.getCustomerToken().getCustId())) ;
+//			System.out.println(restaurantDto.getRestaurant()+" \n"+restaurantDto.getCustomerToken());
+			if(!aServ.verifyAdmin(restaurantDto.getCustomerToken(), restaurantDto.getCustomerToken().getCustId()));
 			return new ResponseEntity<>(rServ.addRestaurant(restaurantDto.getRestaurant()), HttpStatus.ACCEPTED);
 	}
 	
-	@PutMapping("/{token}")
-	public ResponseEntity<Restaurant> updateRestaurantHandler(@Valid @RequestBody Restaurant restaurant, @PathVariable("token") String token) throws RestaurantException,NoRestaurantFoundException,MultipleRestaurantFoundException {
-		
-		return new ResponseEntity<>(rServ.updateRestaurant(restaurant), HttpStatus.ACCEPTED);
+	@PutMapping("/")
+	public ResponseEntity<Restaurant> updateRestaurantHandler(@Valid @RequestBody RestaurantDto restaurantDto) throws RestaurantException,NoRestaurantFoundException,MultipleRestaurantFoundException, AdminAcessNotGrantedException {
+		if(!aServ.verifyAdmin(restaurantDto.getCustomerToken(), restaurantDto.getCustomerToken().getCustId()));
+		return new ResponseEntity<>(rServ.updateRestaurant(restaurantDto.getRestaurant()), HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/{rId}")
-	public  ResponseEntity<Restaurant> removeRestaurantHandler(@PathVariable("rId") Integer restaurantId) throws NoRestaurantFoundException {
+	public  ResponseEntity<Restaurant> removeRestaurantHandler(@Valid @RequestBody RestaurantDto restaurantDto, @PathVariable("rId") Integer restaurantId) throws NoRestaurantFoundException, AdminAcessNotGrantedException {
+		if(!aServ.verifyAdmin(restaurantDto.getCustomerToken(), restaurantDto.getCustomerToken().getCustId()));
 		return new ResponseEntity<>(rServ.removeRestaurant(restaurantId), HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{rId}")
-	public ResponseEntity<Restaurant> getResturantHandler(@PathVariable("rId") Integer restaurantId) throws NoRestaurantFoundException {
+	public ResponseEntity<Restaurant> getResturantHandler(@Valid @RequestBody RestaurantDto restaurantDto, @PathVariable("rId") Integer restaurantId) throws NoRestaurantFoundException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException {
+		if(aServ.verifyUser(restaurantDto.getCustomerToken()));
 		return new ResponseEntity<>(rServ.getResturant(restaurantId), HttpStatus.FOUND);
 	}
 	
 	@GetMapping("/findByName/{rN}")
-	public ResponseEntity<List<Restaurant>> viewRestaurantByNameHandler(@PathVariable("rN") String restaurantName) throws NoRestaurantFoundException {
+	public ResponseEntity<List<Restaurant>> viewRestaurantByNameHandler(@Valid @RequestBody RestaurantDto restaurantDto, @PathVariable("rN") String restaurantName) throws NoRestaurantFoundException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException {
+		if(aServ.verifyUser(restaurantDto.getCustomerToken()));
 		return new ResponseEntity<>(rServ.viewRestaurantByName(restaurantName), HttpStatus.FOUND);
 	}
 	

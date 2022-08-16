@@ -27,7 +27,6 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public Item  updateItem (Item item) throws ItemNotFoundException, MultipleItemFoundException {
-		// TODO Auto-generated method stub
 		boolean flag =true;
 		if(item.getItemId()==null) {
 			flag = false;
@@ -36,6 +35,7 @@ public class ItemServiceImpl implements ItemService {
 			Optional<Item> opt = iDao.findById(item.getItemId());
 			
 			if(opt.isPresent()) {
+				item.getCategory().setCategoryId(opt.get().getCategory().getCategoryId());
 				iDao.save(item);
 				return item;
 			}else {
@@ -49,7 +49,9 @@ public class ItemServiceImpl implements ItemService {
 			}else if(opt.size()>1) {
 				throw new MultipleItemFoundException("Item not found by the given name");
 			}else {
-				return iDao.save(opt.get(0));
+				item.getCategory().setCategoryId(opt.get(0).getCategory().getCategoryId());
+				item.setItemId(opt.get(0).getItemId());
+				return iDao.save(item);
 			}
 		}
 	}
@@ -67,7 +69,6 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public Item removeItem(Integer itemId) throws ItemNotFoundException {
-		// TODO Auto-generated method stub
 		Optional<Item> opt = iDao.findById(itemId);
 		
 		if(opt.isPresent()) {
@@ -76,7 +77,6 @@ public class ItemServiceImpl implements ItemService {
 		}else {
 			throw new ItemNotFoundException("Item not found by the given ID");
 		}
-
 	}
 
 	@Override
