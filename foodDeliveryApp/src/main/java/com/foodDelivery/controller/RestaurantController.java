@@ -29,7 +29,7 @@ import com.foodDelivery.serviceLayer.ResturantService;
 import com.foodDelivery.serviceLayer.admin.AdminService;
 
 @RestController
-@RequestMapping("/Restaurant")
+@RequestMapping("/restaurant")
 public class RestaurantController {
 
 	@Autowired
