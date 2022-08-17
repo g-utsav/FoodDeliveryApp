@@ -24,7 +24,7 @@ public class Address {
 	
 	private String area;
 	
-	@NotNull
+	//@NotNull
 	private String city;
 	
 	@NotNull
@@ -33,7 +33,7 @@ public class Address {
 	@NotNull
 	private String country;
 	
-	@Size(min=6,max=6)
+	//@Size(min=6,max=6)
 	private Integer pincode;
 
 

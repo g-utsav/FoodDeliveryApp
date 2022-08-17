@@ -40,8 +40,8 @@ public class CartController {
         return new ResponseEntity<>(cartService.removeItemDTOFromCart(cartId,itemDTOId),HttpStatus.OK);
     }
 
-    @PutMapping (value = "clearCart/{cartId}")
+    /*@PutMapping (value = "/clearCart/{cartId}")
     public ResponseEntity<Cart> clearCartHandler (@PathVariable ("cartId") Integer cartId){
         return new ResponseEntity<>(cartService.clearCart(cartId),HttpStatus.OK);
-    }
+    }*/
 }

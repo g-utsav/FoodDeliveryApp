@@ -28,11 +28,13 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public Cart addItemToCart(Integer customerId,Integer resturantId, Integer itemId) {
-        Optional<Cart> opt = cartDao.findById(customerId);
+        Cart cart=null;
+        Optional<Customer> opt = customerDao.findById(customerId);
 
         if (opt.isPresent()){
 
-            Cart cart = opt.get();
+            Customer customer = opt.get();
+            cart = customer.getCart();
             Optional<Item> itemOpt = cartItemDao.findById(itemId);
 
             if (itemOpt.isPresent()){
@@ -40,13 +42,13 @@ public class CartServiceImpl implements CartService{
                 Item item = itemOpt.get();
                 Optional<Restaurant> restaurantOpt = restaurantDao.findById(resturantId);
 
-
                 if (restaurantOpt.isPresent()){
                     Restaurant restaurant = restaurantOpt.get();
 
                     List<CartItemDTO1> cartItems = cart.getCartItems();
 
                     CartItemDTO1 itemDTO = new CartItemDTO1();
+
                     itemDTO.setItemId(item.getItemId());
                     itemDTO.setRestaurantId(restaurant.getResturantId());
                     itemDTO.setItemName(item.getItemName());
@@ -54,6 +56,8 @@ public class CartServiceImpl implements CartService{
                     itemDTO.setResturantName(restaurant.getRestaurantName());
                     itemDTO.setQuantity(1);
                     itemDTO.setCost(item.getCost());
+                    //itemDTO.setCart(cart);
+                    itemDTO.setCartId(cart.getCartId());
 
                     cartItems.add(itemDTO);
                     cartItemDTODao.save(itemDTO);
@@ -69,7 +73,7 @@ public class CartServiceImpl implements CartService{
             //Exception
         }
 
-        return opt.get();
+        return cart;
     }
 
     @Override
@@ -80,6 +84,7 @@ public class CartServiceImpl implements CartService{
         if (opt.isPresent()){
             itemDTO = opt.get();
             itemDTO.setQuantity(quantity);
+            cartItemDTODao.save(itemDTO);
         }
         else {
             //Exception
@@ -97,6 +102,7 @@ public class CartServiceImpl implements CartService{
             itemDTO = itemDTOopt.get();
 
             itemDTO.setQuantity(itemDTO.getQuantity()+quantity);
+            cartItemDTODao.save(itemDTO);
         }
         else {
             //Exception
@@ -132,6 +138,7 @@ public class CartServiceImpl implements CartService{
                     }
                     else{
                         itemDTO.setQuantity(itemDTO.getQuantity()-quantity);
+                        cartItemDTODao.save(itemDTO);
                     }
                 }
                 else{
@@ -162,6 +169,7 @@ public class CartServiceImpl implements CartService{
 
             if (itemDTOOpt.isPresent()){
                 itemDTO =itemDTOOpt.get();
+
                 cart.getCartItems().remove(itemDTO);
                 cartItemDTODao.delete(itemDTO);
             }
@@ -182,8 +190,14 @@ public class CartServiceImpl implements CartService{
 
         if (cartOpt.isPresent()){
             cart=cartOpt.get();
-            cart.getCartItems().removeAll(cart.getCartItems());
-            cartItemDTODao.deleteItemDTOByCartId(cartId);
+            //cart.getCartItems().removeAll(cart.getCartItems());
+            cart.setCartItems(null);
+
+            List<CartItemDTO1> cartItemDTO1List = cart.getCartItems();
+
+            cartItemDTODao.deleteAll(cartItemDTO1List);
+
+            //cartItemDTODao.deleteItemDTOByCartId(cartId);
         }
         else{
             //Exception

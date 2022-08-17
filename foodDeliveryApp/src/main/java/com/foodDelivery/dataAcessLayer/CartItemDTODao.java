@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartItemDTODao extends JpaRepository<CartItemDTO1,Integer> {
 
-    @Query ("delete from CartItemDTO1 i where i.cart.cartId=?1")
+    @Query ("delete from CartItemDTO1 cdto where cdto.cartId=?1")
     public void deleteItemDTOByCartId(Integer cartId);
 }

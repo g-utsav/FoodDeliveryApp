@@ -13,7 +13,7 @@ import java.util.List;
 @ControllerAdvice
 public class GlobalExceptionsHandler {
 
-    @ExceptionHandler (CustomerException.class)
+    /*@ExceptionHandler (CustomerException.class)
     public ResponseEntity<MyErrorDetails> customerExceptionHandler(CustomerException customerException, WebRequest webRequest){
         MyErrorDetails myErrorDetails = new MyErrorDetails();
         myErrorDetails.setLocalDateTime(LocalDateTime.now());
@@ -47,5 +47,5 @@ public class GlobalExceptionsHandler {
         myErrorDetails.setMessage(multipleRestaurantFoundException.getMessage());
         myErrorDetails.setDescription(webRequest.getDescription(false));
         return new ResponseEntity<MyErrorDetails>(myErrorDetails, HttpStatus.MULTIPLE_CHOICES);
-    }
+    }*/
 }
