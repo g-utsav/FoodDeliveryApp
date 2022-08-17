@@ -56,19 +56,19 @@
 		    <artifactId>spring-boot-starter-validation</artifactId>
 		    <version>2.7.2</version>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-boot-starter</artifactId>
 		    <version>3.0.0</version>
 		   
-		</dependency>-->
+		</dependency>
 		
-		<!--<dependency>
+		<dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-swagger-ui</artifactId>
 		    <version>3.0.0</version>
 		   
-		</dependency>-->
+		</dependency>
 	</dependencies>
 
 	<build>
