@@ -2,6 +2,9 @@ package com.foodDelivery.controller;
 
 import com.foodDelivery.entity.Cart;
 import com.foodDelivery.entity.CartItemDTO1;
+import com.foodDelivery.exceptions.CartItemNotFoundException;
+import com.foodDelivery.exceptions.CartItemQuantityException;
+import com.foodDelivery.exceptions.CartNotFoundException;
 import com.foodDelivery.serviceLayer.Cart.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,12 +34,12 @@ public class CartController {
     }
 
     @PutMapping (value = "/reduceQuantity/{itemDTOId}/{quantity}/cartId")
-    public ResponseEntity<CartItemDTO1> reduceQuantityForEachItemDTOHandler (@PathVariable ("itemDTOId") Integer itemDTOId, @PathVariable ("quantity") Integer quantity, @PathVariable ("cartId") Integer cartId){
+    public ResponseEntity<CartItemDTO1> reduceQuantityForEachItemDTOHandler (@PathVariable ("itemDTOId") Integer itemDTOId, @PathVariable ("quantity") Integer quantity, @PathVariable ("cartId") Integer cartId) throws CartNotFoundException, CartItemNotFoundException, CartItemQuantityException{
         return new ResponseEntity<>(cartService.reduceQuantityForEachItemDTO(cartId,itemDTOId,quantity),HttpStatus.OK);
     }
 
     @PutMapping (value = "/removeItemFromCart/{cartId}/{itemDTOId}")
-    public ResponseEntity<CartItemDTO1> removeItemDTOFromCartHandler (@PathVariable ("cartId") Integer cartId, @PathVariable ("itemDTOId") Integer itemDTOId){
+    public ResponseEntity<CartItemDTO1> removeItemDTOFromCartHandler (@PathVariable ("cartId") Integer cartId, @PathVariable ("itemDTOId") Integer itemDTOId) throws CartItemNotFoundException, CartNotFoundException{
         return new ResponseEntity<>(cartService.removeItemDTOFromCart(cartId,itemDTOId),HttpStatus.OK);
     }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodDelivery.entity.Customer;
+import com.foodDelivery.exceptions.CustomerException;
 import com.foodDelivery.exceptions.UnAuthorizedCustomerException;
 import com.foodDelivery.exceptions.UserAllReadyLoggedInException;
 import com.foodDelivery.serviceLayer.Customer.CustomerServiceImpl;
@@ -30,7 +31,7 @@ public class SignUpController {
 	//to Register user
 	
 	@PostMapping(value = "/")
-	public Customer saveCustomer(@Valid @RequestBody Customer customer) throws UserAllReadyLoggedInException {
+	public Customer saveCustomer(@Valid @RequestBody Customer customer) throws UserAllReadyLoggedInException, CustomerException {
 		
 		return customerServiceImpl.createCustomer(customer);
 	}
