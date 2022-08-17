@@ -1,6 +1,8 @@
 package com.foodDelivery.controller;
 
 import com.foodDelivery.entity.Customer;
+import com.foodDelivery.exceptions.CustomerException;
+import com.foodDelivery.exceptions.CustomerNotFoundException;
 import com.foodDelivery.serviceLayer.Cart.CartService;
 import com.foodDelivery.serviceLayer.Customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,24 +21,24 @@ public class CustomerController {
     private CartService cartService;
 
     @GetMapping (value = "/view/{id}")
-    public ResponseEntity<Customer> getCustomerHandler(@PathVariable ("id") Integer id){
+    public ResponseEntity<Customer> getCustomerHandler(@PathVariable ("id") Integer id) throws CustomerException{
         return new ResponseEntity<>(customerService.viewCustomer(id),HttpStatus.FOUND);
     }
 
     @PostMapping (value = "/add")
-    public ResponseEntity<Customer> addCustomerHandler(@RequestBody Customer customer){
+    public ResponseEntity<Customer> addCustomerHandler(@RequestBody Customer customer) throws CustomerException{
 
         return new ResponseEntity<>(customerService.addCustomer(customer), HttpStatus.ACCEPTED);
     }
 
     @PutMapping (value = "/update/{id}")
-    public ResponseEntity<Customer> updateCustomerHandler(@PathVariable ("id") Integer id, @RequestBody Customer customer){
+    public ResponseEntity<Customer> updateCustomerHandler(@PathVariable ("id") Integer id, @RequestBody Customer customer) throws CustomerException, CustomerNotFoundException{
 
         return new ResponseEntity<>(customerService.updateCustomer(id, customer), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping (value = "/delete/{id}")
-    public ResponseEntity<Customer> deleteCustomerhandler(@PathVariable ("id") Integer id){
+    public ResponseEntity<Customer> deleteCustomerhandler(@PathVariable ("id") Integer id) throws CustomerException, CustomerNotFoundException{
 
         return new ResponseEntity<>(customerService.removeCustomer(id),HttpStatus.OK);
     }
