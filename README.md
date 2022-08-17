@@ -2,6 +2,11 @@
 
 ###  We have created REST API's with the help of SpringBoot. This is our Consrtuct Week project at Masai School ,Basically in masai school after every  four week we have to build project on basis of whatever learned in last four weeks.
 
+
+# Class Diagram(ER)
+
+![class Diagram](https://user-images.githubusercontent.com/101566533/185026588-e10640fb-cda2-48a9-8748-e5855261af3e.jpeg)
+
 ## Setup
 ###  There are various ways to use spring boot to develop a spring application: 
 
@@ -66,25 +71,105 @@ STS Instructions
 
 ## Restaurant
 
+-  Add Restaurant      : From this API Admin can add New Restaurant to the database                   
+
+           Post           : RestaurantDTO
+-  Update Restaurant      : From this API  Admin can update  any Restaurant to the database                   
+
+           Put           : RestaurantDTO
+-  Remove Restaurant  : From this API  Admin can Delete  any Restaurant from the database 
+
+           Delete           : RestaurantDTO
+-  View Restaurant    : From this API user can see  All Restaurants 
+
+          Get           :  RestaurantName
 
 
 
 ## Cart 
+
+-  Add Item to Cart       : From this API User can add item to the Cart                   
+
+           Put           : customerId, RestaurantId,ItemId
+-  Increase Number of Quantity       : From this API  User can increase quantity of products               
+
+           Put           : itemDTOId,quantity
+-  Remove Item to cart  : From this API  User can Delete  item from the cart 
+
+           put          : CartId,ItemDtoId
 
 
 
 
 ## Items
 
+-  Add Item      : From this API Admin can add any Item to the database                   
+
+           Post           : Item
+-  Update Item      : From this API  Admin can update  any Item to the database                   
+
+           Put           : Item
+-  Remove Item  : From this API  Admin can Delete  any Item from the database 
+
+           Delete           : Item
+-  View Item    : From this API user can see  Item
+
+          Get           :  ItemId
+-  View All Items    : From this API user can see all Items
+
+          Get           :  ItemName
 
 
+## Category
+
+-  Add Category      : From this API Admin can add any  Item in Category to the database                   
+
+           Post           : Category
+-  Update Category      : From this API  Admin can update  any Item in Category to the database                   
+
+           Put           : Category
+-  Remove Category  : From this API  Admin can Delete  any Item Category from the database 
+
+           Delete           : Category
 
 
 ## OrderDetails
 
+-  Update Order      : From this API Admin can update the status of any order                   
+
+           Put           : OrderDetailsDto
+-  Add Order      : From this API user can place Order                   
+
+           Post           : customerDTO
+-  Remove Order  : From this API user can cancel the placed order  
+
+           Delete           : OrderDetails
+-  View All Pending Orders    : From this API user can see all pending orders
+
+          Get           :   OrderDetailsDto
+-  View All Orders    : From this API user can see all  orders
+
+          Get           :   OrderDetailsDto
+
+
+
 
 ## Bill
 
+-  Remove Bill  : From this API Admin can cancel the placed order  
+
+           Delete           : BillDTO, Id
+
+-  Generate Bill      : From this API User can Generate Bill of placed order                   
+
+           Post           : BillDTO
+-  Update Bill      : From this API user can Update the bill                  
+
+           Put          : BillDTO
+
+-  Get Bill     : From this API user can see All bill details
+
+          Get           : customerId,BillDTO
 
 
 
