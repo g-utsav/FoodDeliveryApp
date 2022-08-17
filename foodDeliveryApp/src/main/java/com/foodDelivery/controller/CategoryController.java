@@ -14,30 +14,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodDelivery.entity.Category;
+import com.foodDelivery.entity.dto.CategoryDTO;
+import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
 import com.foodDelivery.exceptions.CategoryException;
 import com.foodDelivery.serviceLayer.Category.CategoryService;
+import com.foodDelivery.serviceLayer.admin.AdminService;
 
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
 	
 	@Autowired
+	private AdminService aServ;
+	
+	@Autowired
 	private CategoryService cService;
 	
 	@PostMapping("/addCategory")
-	public ResponseEntity<Category> addCategoryHandler(@Valid @RequestBody Category category )  throws CategoryException{
+	public ResponseEntity<Category> addCategoryHandler(@Valid @RequestBody CategoryDTO categoryDTO )  throws CategoryException, AdminAcessNotGrantedException{
+		if(!aServ.verifyAdmin(categoryDTO.getCustomerToken(), categoryDTO.getCustomerToken().getCustId())) {
+			
+		}
+		return new ResponseEntity<>(cService.addCategory(categoryDTO.getCategory()),HttpStatus.CREATED);
 		
-		return new ResponseEntity<>(cService.addCategory(category),HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{catgId}")
-	public ResponseEntity<Category> updateCategoryHandler(@Valid @RequestBody Category category, @PathVariable ("catgId") Integer catgId  )  throws CategoryException{
+	public ResponseEntity<Category> updateCategoryHandler(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable ("catgId") Integer catgId  )  throws CategoryException, AdminAcessNotGrantedException{
+		if(aServ.verifyAdmin(categoryDTO.getCustomerToken(), categoryDTO.getCustomerToken().getCustId())) {
+			
+		}
 		
-		return new ResponseEntity<>(cService.updateCategory(category,catgId),HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(cService.updateCategory(categoryDTO.getCategory(),catgId),HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/{catgId}")
-	public ResponseEntity<Category>  removeCategory( @PathVariable ("catgId") Integer categoryId) throws CategoryException{
+	public ResponseEntity<Category>  removeCategory(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable ("catgId") Integer categoryId) throws CategoryException, AdminAcessNotGrantedException{
+		if(aServ.verifyAdmin(categoryDTO.getCustomerToken(), categoryDTO.getCustomerToken().getCustId())) {
+			
+		}
 		return new ResponseEntity<>(cService.removeCategory(categoryId),HttpStatus.ACCEPTED);
 		
 	}
