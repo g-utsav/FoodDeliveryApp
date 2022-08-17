@@ -2,6 +2,7 @@ package com.foodDelivery.serviceLayer.Customer;
 
 import java.util.Optional;
 
+import com.foodDelivery.exceptions.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,19 +41,19 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public Customer updateCustomer(Integer id, Customer customer) throws CustomerException {
+    public Customer updateCustomer(Integer id, Customer customer) throws CustomerNotFoundException {
         Optional opt = customerDao.findById(id);
 
         if (opt.isPresent()){
             return customerDao.save(customer);
         }
         else {
-            throw new CustomerException("Customer Not Exists...");
+            throw new CustomerNotFoundException("Customer Not Exists...");
         }
     }
 
     @Override
-    public Customer removeCustomer(Integer id) throws CustomerException {
+    public Customer removeCustomer(Integer id) throws CustomerNotFoundException {
         Optional opt = customerDao.findById(id);
 
         if (opt.isPresent()){
@@ -62,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService{
             return customer;
         }
         else {
-            throw new CustomerException("Customer Not Exists...");
+            throw new CustomerNotFoundException("Customer Not Exists...");
         }
     }
 
@@ -79,14 +80,14 @@ public class CustomerServiceImpl implements CustomerService{
     }
     
 	@Override
-	public Customer createCustomer(Customer customer) throws UserAllReadyLoggedInException {
+	public Customer createCustomer(Customer customer) throws CustomerException {
 		
 		Optional<Customer> opt = customerDao.findByMobileNumber(customer.getMobileNumber());
 		
 		if(opt.isPresent()) {
 			System.out.println("User Already Exist");
 			
-			throw new UserAllReadyLoggedInException("User allready logged in with this Mobile Number ");
+			throw new CustomerException("Customer Already Exists");
 		}
 		
 		return customerDao.save(customer);

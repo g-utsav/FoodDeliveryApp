@@ -2,6 +2,9 @@ package com.foodDelivery.serviceLayer.Cart;
 
 import com.foodDelivery.dataAcessLayer.*;
 import com.foodDelivery.entity.*;
+import com.foodDelivery.exceptions.CartItemNotFoundException;
+import com.foodDelivery.exceptions.CartItemQuantityException;
+import com.foodDelivery.exceptions.CartNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.foodDelivery.entity.CartItemDTO1;
@@ -113,7 +116,7 @@ public class CartServiceImpl implements CartService{
 
 
     @Override
-    public CartItemDTO1 reduceQuantityForEachItemDTO(Integer cartId, Integer itemDTOId, Integer quantity) {
+    public CartItemDTO1 reduceQuantityForEachItemDTO(Integer cartId, Integer itemDTOId, Integer quantity) throws CartNotFoundException, CartItemNotFoundException, CartItemQuantityException {
 
         Cart cart=null;
         CartItemDTO1 itemDTO = null;
@@ -143,21 +146,24 @@ public class CartServiceImpl implements CartService{
                 }
                 else{
                     //Exception
+                    throw new CartItemQuantityException("Quantity to be Reduced should be lesser than Actual Quantity");
                 }
             }
             else {
                 //Exception
+                throw new CartItemNotFoundException("Cart Item Not Found");
             }
         }
         else{
             //Exception
+            throw new CartNotFoundException("Cart Not Found");
         }
 
         return itemDTO;
     }
 
     @Override
-    public CartItemDTO1 removeItemDTOFromCart(Integer cartId, Integer itemDTOId) {
+    public CartItemDTO1 removeItemDTOFromCart(Integer cartId, Integer itemDTOId) throws CartItemNotFoundException, CartNotFoundException {
         CartItemDTO1 itemDTO =null;
 
         Optional<Cart> cartOpt = cartDao.findById(cartId);
@@ -175,10 +181,12 @@ public class CartServiceImpl implements CartService{
             }
             else{
                 //Exception
+                throw new CartItemNotFoundException("Cart Item Not Found");
             }
         }
         else{
             //Exception
+            throw new CartNotFoundException("Cart Not Found");
         }
         return itemDTO;
     }
