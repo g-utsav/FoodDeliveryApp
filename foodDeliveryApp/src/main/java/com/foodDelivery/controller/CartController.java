@@ -1,7 +1,7 @@
 package com.foodDelivery.controller;
 
 import com.foodDelivery.entity.Cart;
-import com.foodDelivery.entity.ItemDTO;
+import com.foodDelivery.entity.CartItemDTO1;
 import com.foodDelivery.serviceLayer.Cart.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,27 +21,27 @@ public class CartController {
     }
 
     @PutMapping (value = "/setQuantity/{itemDTOId}/{quantity}")
-    public ResponseEntity<ItemDTO> setQuantityForEachItemDTOHandler (@PathVariable ("itemDTOId") Integer itemDTOId, @PathVariable ("quantity") Integer quantity){
+    public ResponseEntity<CartItemDTO1> setQuantityForEachItemDTOHandler (@PathVariable ("itemDTOId") Integer itemDTOId, @PathVariable ("quantity") Integer quantity){
         return new ResponseEntity<>(cartService.setQuantityForEachItemDTO(itemDTOId,quantity),HttpStatus.OK);
     }
 
     @PutMapping (value = "/increaseQuantity/{itemDTOId}/{quantity}")
-    public ResponseEntity<ItemDTO> increaseQuantityForEachItemDTOHandler (@PathVariable ("itemDTOId") Integer itemDTOId, @PathVariable ("quantity") Integer quantity){
+    public ResponseEntity<CartItemDTO1> increaseQuantityForEachItemDTOHandler (@PathVariable ("itemDTOId") Integer itemDTOId, @PathVariable ("quantity") Integer quantity){
         return new ResponseEntity<>(cartService.increaseQuantityForEachItemDTO(itemDTOId,quantity),HttpStatus.OK);
     }
 
     @PutMapping (value = "/reduceQuantity/{itemDTOId}/{quantity}/cartId")
-    public ResponseEntity<ItemDTO> reduceQuantityForEachItemDTOHandler (@PathVariable ("itemDTOId") Integer itemDTOId, @PathVariable ("quantity") Integer quantity, @PathVariable ("cartId") Integer cartId){
+    public ResponseEntity<CartItemDTO1> reduceQuantityForEachItemDTOHandler (@PathVariable ("itemDTOId") Integer itemDTOId, @PathVariable ("quantity") Integer quantity, @PathVariable ("cartId") Integer cartId){
         return new ResponseEntity<>(cartService.reduceQuantityForEachItemDTO(cartId,itemDTOId,quantity),HttpStatus.OK);
     }
 
     @PutMapping (value = "/removeItemFromCart/{cartId}/{itemDTOId}")
-    public ResponseEntity<ItemDTO> removeItemDTOFromCartHandler (@PathVariable ("cartId") Integer cartId, @PathVariable ("itemDTOId") Integer itemDTOId){
+    public ResponseEntity<CartItemDTO1> removeItemDTOFromCartHandler (@PathVariable ("cartId") Integer cartId, @PathVariable ("itemDTOId") Integer itemDTOId){
         return new ResponseEntity<>(cartService.removeItemDTOFromCart(cartId,itemDTOId),HttpStatus.OK);
     }
 
-    @PutMapping (value = "clearCart/{cartId}")
+    /*@PutMapping (value = "/clearCart/{cartId}")
     public ResponseEntity<Cart> clearCartHandler (@PathVariable ("cartId") Integer cartId){
         return new ResponseEntity<>(cartService.clearCart(cartId),HttpStatus.OK);
-    }
+    }*/
 }

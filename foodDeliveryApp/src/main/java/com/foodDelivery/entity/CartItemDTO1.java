@@ -5,7 +5,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class ItemDTO {
+public class CartItemDTO1 {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -32,13 +32,16 @@ public class ItemDTO {
     @Min(1)
     Integer quantity;
 
-    @ManyToOne
-    private Cart cart;
+    /*@ManyToOne (cascade = CascadeType.ALL)
+    private Cart cart;*/
 
-    public ItemDTO() {
+    @NotNull
+    private Integer cartId;
+
+    public CartItemDTO1() {
     }
 
-    public ItemDTO(Integer itemDTOId, Integer restaurantId, Integer itemId, String itemName, String categoryName, String resturantName, Double cost, Integer quantity) {
+    public CartItemDTO1(Integer itemDTOId, Integer restaurantId, Integer itemId, String itemName, String categoryName, String resturantName, Double cost, Integer quantity, Integer cartId) {
         this.itemDTOId = itemDTOId;
         this.restaurantId = restaurantId;
         this.itemId = itemId;
@@ -47,6 +50,7 @@ public class ItemDTO {
         this.resturantName = resturantName;
         this.cost = cost;
         this.quantity = quantity;
+        this.cartId = cartId;
     }
 
     public Integer getItemDTOId() {
@@ -113,9 +117,17 @@ public class ItemDTO {
         this.quantity = quantity;
     }
 
+    public Integer getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Integer cartId) {
+        this.cartId = cartId;
+    }
+
     @Override
     public String toString() {
-        return "ItemDTO{" +
+        return "CartItemDTO1{" +
                 "itemDTOId=" + itemDTOId +
                 ", restaurantId=" + restaurantId +
                 ", itemId=" + itemId +
@@ -124,6 +136,7 @@ public class ItemDTO {
                 ", resturantName='" + resturantName + '\'' +
                 ", cost=" + cost +
                 ", quantity=" + quantity +
+                ", cartId=" + cartId +
                 '}';
     }
 }

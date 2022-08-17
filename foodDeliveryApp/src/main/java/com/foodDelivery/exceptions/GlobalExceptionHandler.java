@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 	
 	//to handle specific UserNotFoundException
 	
-	@ExceptionHandler(UserNotFound.class)
+	/*@ExceptionHandler(UserNotFound.class)
 	public ResponseEntity<MyErrorDetails> myIllegalHandler(UserNotFound ie,WebRequest req) {
 	
 	MyErrorDetails err=new MyErrorDetails(LocalDateTime.now(), ie.getMessage(), req.getDescription(false));
@@ -62,7 +62,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<MyErrorDetails> mynotFoundHandler(NoHandlerFoundException nfe,WebRequest req) {
 	MyErrorDetails err=new MyErrorDetails(LocalDateTime.now(), nfe.getMessage(), req.getDescription(false));
 	return new ResponseEntity<>(err,HttpStatus.BAD_REQUEST);
-	}
+	}*/
 	
 
 }

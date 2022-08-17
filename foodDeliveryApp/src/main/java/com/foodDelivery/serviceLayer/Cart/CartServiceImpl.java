@@ -4,7 +4,7 @@ import com.foodDelivery.dataAcessLayer.*;
 import com.foodDelivery.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.foodDelivery.entity.ItemDTO;
+import com.foodDelivery.entity.CartItemDTO1;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +28,13 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public Cart addItemToCart(Integer customerId,Integer resturantId, Integer itemId) {
-        Optional<Cart> opt = cartDao.findById(customerId);
+        Cart cart=null;
+        Optional<Customer> opt = customerDao.findById(customerId);
 
         if (opt.isPresent()){
 
-            Cart cart = opt.get();
+            Customer customer = opt.get();
+            cart = customer.getCart();
             Optional<Item> itemOpt = cartItemDao.findById(itemId);
 
             if (itemOpt.isPresent()){
@@ -40,13 +42,13 @@ public class CartServiceImpl implements CartService{
                 Item item = itemOpt.get();
                 Optional<Restaurant> restaurantOpt = restaurantDao.findById(resturantId);
 
-
                 if (restaurantOpt.isPresent()){
                     Restaurant restaurant = restaurantOpt.get();
 
-                    List<ItemDTO> cartItems = cart.getCartItems();
+                    List<CartItemDTO1> cartItems = cart.getCartItems();
 
-                    ItemDTO itemDTO = new ItemDTO();
+                    CartItemDTO1 itemDTO = new CartItemDTO1();
+
                     itemDTO.setItemId(item.getItemId());
                     itemDTO.setRestaurantId(restaurant.getResturantId());
                     itemDTO.setItemName(item.getItemName());
@@ -54,6 +56,8 @@ public class CartServiceImpl implements CartService{
                     itemDTO.setResturantName(restaurant.getRestaurantName());
                     itemDTO.setQuantity(1);
                     itemDTO.setCost(item.getCost());
+                    //itemDTO.setCart(cart);
+                    itemDTO.setCartId(cart.getCartId());
 
                     cartItems.add(itemDTO);
                     cartItemDTODao.save(itemDTO);
@@ -69,17 +73,18 @@ public class CartServiceImpl implements CartService{
             //Exception
         }
 
-        return opt.get();
+        return cart;
     }
 
     @Override
-    public ItemDTO setQuantityForEachItemDTO(Integer itemDTOId, Integer quantity) {
-        ItemDTO itemDTO = null;
-        Optional<ItemDTO> opt = cartItemDTODao.findById(itemDTOId);
+    public CartItemDTO1 setQuantityForEachItemDTO(Integer itemDTOId, Integer quantity) {
+        CartItemDTO1 itemDTO = null;
+        Optional<CartItemDTO1> opt = cartItemDTODao.findById(itemDTOId);
 
         if (opt.isPresent()){
             itemDTO = opt.get();
             itemDTO.setQuantity(quantity);
+            cartItemDTODao.save(itemDTO);
         }
         else {
             //Exception
@@ -88,15 +93,16 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public ItemDTO increaseQuantityForEachItemDTO(Integer itemDTOId, Integer quantity) {
+    public CartItemDTO1 increaseQuantityForEachItemDTO(Integer itemDTOId, Integer quantity) {
 
-        ItemDTO itemDTO =null;
-        Optional<ItemDTO> itemDTOopt = cartItemDTODao.findById(itemDTOId);
+        CartItemDTO1 itemDTO =null;
+        Optional<CartItemDTO1> itemDTOopt = cartItemDTODao.findById(itemDTOId);
 
         if (itemDTOopt.isPresent()){
             itemDTO = itemDTOopt.get();
 
             itemDTO.setQuantity(itemDTO.getQuantity()+quantity);
+            cartItemDTODao.save(itemDTO);
         }
         else {
             //Exception
@@ -107,10 +113,10 @@ public class CartServiceImpl implements CartService{
 
 
     @Override
-    public ItemDTO reduceQuantityForEachItemDTO(Integer cartId, Integer itemDTOId, Integer quantity) {
+    public CartItemDTO1 reduceQuantityForEachItemDTO(Integer cartId, Integer itemDTOId, Integer quantity) {
 
         Cart cart=null;
-        ItemDTO itemDTO = null;
+        CartItemDTO1 itemDTO = null;
 
         Optional<Cart> cartOpt = cartDao.findById(cartId);
 
@@ -119,7 +125,7 @@ public class CartServiceImpl implements CartService{
             cart=cartOpt.get();
 
 
-            Optional<ItemDTO> opt = cartItemDTODao.findById(itemDTOId);
+            Optional<CartItemDTO1> opt = cartItemDTODao.findById(itemDTOId);
 
             if (opt.isPresent()){
                 itemDTO = opt.get();
@@ -132,6 +138,7 @@ public class CartServiceImpl implements CartService{
                     }
                     else{
                         itemDTO.setQuantity(itemDTO.getQuantity()-quantity);
+                        cartItemDTODao.save(itemDTO);
                     }
                 }
                 else{
@@ -150,18 +157,19 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public ItemDTO removeItemDTOFromCart(Integer cartId, Integer itemDTOId) {
-        ItemDTO itemDTO =null;
+    public CartItemDTO1 removeItemDTOFromCart(Integer cartId, Integer itemDTOId) {
+        CartItemDTO1 itemDTO =null;
 
         Optional<Cart> cartOpt = cartDao.findById(cartId);
 
         if (cartOpt.isPresent()){
             Cart cart = cartOpt.get();
 
-            Optional<ItemDTO> itemDTOOpt = cartItemDTODao.findById(itemDTOId);
+            Optional<CartItemDTO1> itemDTOOpt = cartItemDTODao.findById(itemDTOId);
 
             if (itemDTOOpt.isPresent()){
                 itemDTO =itemDTOOpt.get();
+
                 cart.getCartItems().remove(itemDTO);
                 cartItemDTODao.delete(itemDTO);
             }
@@ -182,8 +190,14 @@ public class CartServiceImpl implements CartService{
 
         if (cartOpt.isPresent()){
             cart=cartOpt.get();
-            cart.getCartItems().removeAll(cart.getCartItems());
-            cartItemDTODao.deleteItemDTOByCartId(cartId);
+            //cart.getCartItems().removeAll(cart.getCartItems());
+            cart.setCartItems(null);
+
+            List<CartItemDTO1> cartItemDTO1List = cart.getCartItems();
+
+            cartItemDTODao.deleteAll(cartItemDTO1List);
+
+            //cartItemDTODao.deleteItemDTOByCartId(cartId);
         }
         else{
             //Exception
