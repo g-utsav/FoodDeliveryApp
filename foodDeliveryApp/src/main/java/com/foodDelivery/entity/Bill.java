@@ -52,7 +52,7 @@ public class Bill {
 	}
 	
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
     private Customer customer;
 
     LocalDateTime billDateTime;
