@@ -25,6 +25,11 @@ public class AddressController {
         return new ResponseEntity<>(addressService.addAddress(address), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping (value = "/")
+    public ResponseEntity<String> generalMessage (){
+        return new ResponseEntity<>("This is Address Controller",HttpStatus.OK);
+    }
+
     @DeleteMapping (value = "/remove")
     public ResponseEntity<Address> removeAddressHandler (@RequestBody Address address){
         return new ResponseEntity<>(addressService.removeAddress(address),HttpStatus.OK);
