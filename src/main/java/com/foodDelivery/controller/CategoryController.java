@@ -56,4 +56,9 @@ public class CategoryController {
 		return new ResponseEntity<>(cService.removeCategory(categoryId),HttpStatus.ACCEPTED);
 		
 	}
+
+    @GetMapping (value = "/")
+    public ResponseEntity<String> generalMessage (){
+        return new ResponseEntity<>("This is Category Controller visit https://github.com/g-utsav/FoodDeliveryApp for URL extension Detail.",HttpStatus.OK);
+    }
 }

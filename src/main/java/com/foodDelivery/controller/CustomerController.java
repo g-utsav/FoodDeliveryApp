@@ -42,4 +42,9 @@ public class CustomerController {
 
         return new ResponseEntity<>(customerService.removeCustomer(id),HttpStatus.OK);
     }
+
+    @GetMapping (value = "/")
+    public ResponseEntity<String> generalMessage (){
+        return new ResponseEntity<>("This is Customer Controller visit https://github.com/g-utsav/FoodDeliveryApp for URL extension Detail.",HttpStatus.OK);
+    }
 }

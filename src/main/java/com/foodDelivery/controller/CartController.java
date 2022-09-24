@@ -43,6 +43,11 @@ public class CartController {
         return new ResponseEntity<>(cartService.removeItemDTOFromCart(cartId,itemDTOId),HttpStatus.OK);
     }
 
+    @GetMapping (value = "/")
+    public ResponseEntity<String> generalMessage (){
+        return new ResponseEntity<>("This is Cart Controller visit https://github.com/g-utsav/FoodDeliveryApp for URL extension Detail.",HttpStatus.OK);
+    }
+
     /*@PutMapping (value = "/clearCart/{cartId}")
     public ResponseEntity<Cart> clearCartHandler (@PathVariable ("cartId") Integer cartId){
         return new ResponseEntity<>(cartService.clearCart(cartId),HttpStatus.OK);

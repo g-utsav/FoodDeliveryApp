@@ -12,7 +12,8 @@ public class FoodDeliveryAppApplication {
    	@RequestMapping("/")
     	@ResponseBody
     	String home() {
-      		return "Hello World!";
+		String str = "This is Food Delivery REST-API for the reference of the API visit https://github.com/g-utsav/FoodDeliveryApp \nYou can use\n\t /address \n\t /admin \n\t /bill \n\t /cart \n\t /category \n\t /customer \n\tAnd Many more URL extensions visit github for reference";
+      		return str;
    	}
 
 	public static void main(String[] args) {

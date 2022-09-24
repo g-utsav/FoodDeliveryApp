@@ -27,7 +27,7 @@ public class AddressController {
 
     @GetMapping (value = "/")
     public ResponseEntity<String> generalMessage (){
-        return new ResponseEntity<>("This is Address Controller",HttpStatus.OK);
+        return new ResponseEntity<>("This is Address Controller visit https://github.com/g-utsav/FoodDeliveryApp for URL extension Detail.",HttpStatus.OK);
     }
 
     @DeleteMapping (value = "/remove")
