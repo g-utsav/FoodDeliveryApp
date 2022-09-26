@@ -1,7 +1,6 @@
 # FoodDeliveryApp(Collaborative Project)
 
-###  We have created REST API's with the help of SpringBoot. This is our Consrtuct Week project at Masai School ,Basically in masai school after every  four week we have to build project on basis of whatever learned in last four weeks.
-
+###  We have created REST API web services with the help of SpringBoot for a Food Delivery Application.
 
 # Class Diagram(ER)
 
