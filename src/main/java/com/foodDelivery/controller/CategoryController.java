@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodDelivery.entity.Category;
+import com.foodDelivery.entity.Item;
 import com.foodDelivery.entity.dto.CategoryDTO;
 import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
 import com.foodDelivery.exceptions.CategoryException;
@@ -35,29 +36,52 @@ public class CategoryController {
 	
 	@PostMapping("/addCategory")
 	public ResponseEntity<Category> addCategoryHandler(@Valid @RequestBody CategoryDTO categoryDTO )  throws CategoryException, AdminAcessNotGrantedException{
-		if(!aServ.verifyAdmin(categoryDTO.getCustomerToken(), categoryDTO.getCustomerToken().getCustId())) {
-			
-		}
-		return new ResponseEntity<>(cService.addCategory(categoryDTO.getCategory()),HttpStatus.CREATED);
 		
+		ResponseEntity<Category> res = null;
+
+		if(!aServ.verifyAdmin(categoryDTO.getCustomerToken(), categoryDTO.getCustomerToken().getCustId())) {
+			res = new ResponseEntity<>(cService.addCategory(categoryDTO.getCategory()),HttpStatus.CREATED);
+
+		}
+		if(res !=null) {
+			return res;
+		}else {
+			throw new CategoryException("Category Not found...");
+		}
 	}
 	
 	@PutMapping("/{catgId}")
 	public ResponseEntity<Category> updateCategoryHandler(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable ("catgId") Integer catgId  )  throws CategoryException, AdminAcessNotGrantedException{
+		
+		ResponseEntity<Category> res = null;
+
 		if(aServ.verifyAdmin(categoryDTO.getCustomerToken(), categoryDTO.getCustomerToken().getCustId())) {
 			
+			res  = new ResponseEntity<>(cService.updateCategory(categoryDTO.getCategory(),catgId),HttpStatus.ACCEPTED);
+
+		}
+		if(res !=null) {
+			return res;
+		}else {
+			throw new CategoryException("Category Not found...");
 		}
 		
-		return new ResponseEntity<>(cService.updateCategory(categoryDTO.getCategory(),catgId),HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/{catgId}")
 	public ResponseEntity<Category>  removeCategory(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable ("catgId") Integer categoryId) throws CategoryException, AdminAcessNotGrantedException{
-		if(aServ.verifyAdmin(categoryDTO.getCustomerToken(), categoryDTO.getCustomerToken().getCustId())) {
-			
-		}
-		return new ResponseEntity<>(cService.removeCategory(categoryId),HttpStatus.ACCEPTED);
 		
+		ResponseEntity<Category> res = null;
+
+		if(aServ.verifyAdmin(categoryDTO.getCustomerToken(), categoryDTO.getCustomerToken().getCustId())) {
+			res = new ResponseEntity<>(cService.removeCategory(categoryId),HttpStatus.ACCEPTED);
+
+		}
+		if(res !=null) {
+			return res;
+		}else {
+			throw new CategoryException("Category Not found...");
+		}
 	}
 
     @GetMapping(value = "/")
