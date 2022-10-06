@@ -1,8 +1,10 @@
 package com.foodDelivery.serviceLayer.Item;
 
 import java.util.List;
+import java.util.Set;
 
 import com.foodDelivery.entity.Item;
+import com.foodDelivery.entity.dto.DisplayItem;
 import com.foodDelivery.exceptions.CategoryNotFound;
 import com.foodDelivery.exceptions.ItemAlreadyPresentException;
 import com.foodDelivery.exceptions.ItemNotFoundException;
@@ -18,8 +20,9 @@ public interface ItemService {
 	
 	public Item removeItem (Integer itemId) throws ItemNotFoundException ;
 	
-	public List < Item > viewAllItemsByCategory (String categoryName) throws CategoryNotFound ;
+//	public String viewAllItemsByCategory (String categoryName) throws CategoryNotFound ;
+	public List<DisplayItem> viewAllItemsByCategory (String categoryName) throws CategoryNotFound ;
 		
-	public List < Item > viewAllItemsByItemName (String itemName) throws ItemNotFoundException ;
+	public List<DisplayItem> viewAllItemsByItemName (String itemName) throws ItemNotFoundException ;
 
 }
