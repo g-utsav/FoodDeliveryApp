@@ -1,6 +1,7 @@
 package com.foodDelivery.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.foodDelivery.entity.Item;
 import com.foodDelivery.entity.Restaurant;
 import com.foodDelivery.entity.dto.RestaurantDto;
 import com.foodDelivery.exceptions.AdminAcessNotGrantedException;
@@ -50,6 +52,11 @@ public class RestaurantController {
 		if(!aServ.verifyAdmin(restaurantDto.getCustomerToken(), restaurantDto.getCustomerToken().getCustId()));
 		return new ResponseEntity<>(rServ.updateRestaurant(restaurantDto.getRestaurant()), HttpStatus.ACCEPTED);
 	}
+	@PutMapping("/item/{rid}/{iid}")
+	public ResponseEntity<Restaurant> addItemToRestaurantHandler( @PathVariable("rid") Integer rid, @PathVariable("iid") Integer iid ) throws RestaurantException,NoRestaurantFoundException,MultipleRestaurantFoundException, AdminAcessNotGrantedException {
+//		if(!aServ.verifyAdmin(restaurantDto.getCustomerToken(), restaurantDto.getCustomerToken().getCustId()));
+		return new ResponseEntity<>(rServ.addItemInRestaurant(rid,iid), HttpStatus.ACCEPTED);
+	}
 	
 	@DeleteMapping("/{rId}")
 	public  ResponseEntity<Restaurant> removeRestaurantHandler(@Valid @RequestBody RestaurantDto restaurantDto, @PathVariable("rId") Integer restaurantId) throws NoRestaurantFoundException, AdminAcessNotGrantedException {
@@ -69,4 +76,11 @@ public class RestaurantController {
 		return new ResponseEntity<>(rServ.viewRestaurantByName(restaurantName), HttpStatus.FOUND);
 	}
 	
+	@GetMapping("/viewallitems/{rid}")
+	public ResponseEntity<Set<Item>> viewAllItemsFromRestaurantHandler(@PathVariable("rid") Integer rid) throws NoRestaurantFoundException, UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException {
+
+		return new ResponseEntity<>(rServ.viewAllItemsFromRestaurant(rid), HttpStatus.FOUND);
+	}
+	
+
 }
