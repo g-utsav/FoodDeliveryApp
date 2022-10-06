@@ -1,7 +1,9 @@
 package com.foodDelivery.serviceLayer;
 
 import java.util.List;
+import java.util.Set;
 
+import com.foodDelivery.entity.Item;
 import com.foodDelivery.entity.Restaurant;
 import com.foodDelivery.exceptions.MultipleRestaurantFoundException;
 import com.foodDelivery.exceptions.NoRestaurantFoundException;
@@ -19,7 +21,8 @@ public interface ResturantService {
 	
 	public List<Restaurant> viewRestaurantByName(String restaurantName)throws NoRestaurantFoundException;
 	
-
+	public Restaurant addItemInRestaurant(Integer restId, Integer itemId) throws RestaurantException,NoRestaurantFoundException,MultipleRestaurantFoundException;
 	
-	//viewRestaurantById, viewAllRestaurant, viewItemsByRestaurantId
+	public Set<Item> viewAllItemsFromRestaurant(Integer restId) throws NoRestaurantFoundException;
+	
 }

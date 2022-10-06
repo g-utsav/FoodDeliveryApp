@@ -2,11 +2,14 @@ package com.foodDelivery.serviceLayer;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.foodDelivery.dataAcessLayer.ItemDao;
 import com.foodDelivery.dataAcessLayer.RestaurantDao;
+import com.foodDelivery.entity.Item;
 import com.foodDelivery.entity.Restaurant;
 import com.foodDelivery.exceptions.MultipleRestaurantFoundException;
 import com.foodDelivery.exceptions.NoRestaurantFoundException;
@@ -17,6 +20,9 @@ public class RestaurantServiceImpl implements ResturantService{
 	
 	@Autowired
 	RestaurantDao rServ;
+	
+	@Autowired
+	ItemDao iDao;
 
 	@Override
 	public Restaurant addRestaurant(Restaurant restaurant) throws RestaurantException {
@@ -42,23 +48,43 @@ public class RestaurantServiceImpl implements ResturantService{
 			Optional<Restaurant> opt = rServ.findById(restaurant.getResturantId());
 			
 			if(opt.isPresent()) {
-				rServ.save(restaurant);
-				return restaurant;
+				
+				return rServ.save(restaurant);
 			}else {
 				throw new NoRestaurantFoundException("No Restaurant was Found, Try Addind/Creating a Restaurant First");
 			}
 		}else {
+			
 			List<Restaurant> rList = rServ.findByRestaurantNameAndContactNumber(restaurant.getRestaurantName(), restaurant.getContactNumber());
-			System.out.println(rList);
+			
 			if(rList.size() == 0 ) {
+				
 				throw new NoRestaurantFoundException("No Restaurant was Found, Try Addind/Creating a Restaurant First");
+			
 			}else if(rList.size()>1) {
+				
 				throw new MultipleRestaurantFoundException("Multiple Restaurant Found. Pass the Restaurant ID");
+			
 			}else {
+				
 				restaurant.setResturantId(rList.get(0).getResturantId());
 				return rServ.save(restaurant);
+			
 			}
 		}
+	}
+	@Override
+	public Restaurant addItemInRestaurant(Integer restId, Integer itemId) throws RestaurantException,NoRestaurantFoundException,MultipleRestaurantFoundException {
+		
+		Optional<Restaurant> opt = rServ.findById(restId);
+		Restaurant restaurant = opt.get();
+		Set<Item> items = restaurant.getItemList();
+		
+		Optional<Item> item = iDao.findById(itemId);
+		
+		items.add(item.get());
+		return rServ.save(restaurant);
+
 	}
 
 	@Override
@@ -97,6 +123,17 @@ public class RestaurantServiceImpl implements ResturantService{
 			throw new NoRestaurantFoundException("No Restaurant was Found by the give Name, Try Addind/Creating a Restaurant First");
 		}
 	}
+
+	@Override
+	public Set<Item> viewAllItemsFromRestaurant(Integer restId) throws NoRestaurantFoundException {
+		Optional<Restaurant> opt = rServ.findById(restId);
+		
+		Restaurant restaurant = opt.get();
+		
+		return restaurant.getItemList();
+	}
+
+
 	
 
 
