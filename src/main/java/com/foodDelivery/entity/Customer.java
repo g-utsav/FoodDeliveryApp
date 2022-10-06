@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -32,27 +33,27 @@ public class Customer {
 	@NotNull
 	private String gender;
 
-	//@Size(min=10,max=10)
-	private Long mobileNumber;
+	@Pattern(regexp = "[0-9]{10}",message="Mobile should be 10 digit")
+	private String mobileNumber;
 
 	@Email
 	private String email;
 
 	@NotNull
-	//@Pattern(regexp="^(?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$")
-	//@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15})")
+	@Size(min=5, max=12, message="Password length should be between 5 to 12")
 	private String password;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 
 	@OneToOne(cascade = CascadeType.ALL)
+	@NotNull
 	private Cart cart;
 
 	public Customer() {
 	}
 
-	public Customer(Integer customerId, String firstName, String lastName, Integer age, String gender, Long mobileNumber, String email, String password, Address address, Cart cart) {
+	public Customer(Integer customerId, String firstName, String lastName, Integer age, String gender, String mobileNumber, String email, String password, Address address, Cart cart) {
 		this.customerId = customerId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -122,11 +123,11 @@ public class Customer {
 		this.gender = gender;
 	}
 
-	public Long getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(Long mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
