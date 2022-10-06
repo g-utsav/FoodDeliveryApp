@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionsHandler {
@@ -275,4 +276,32 @@ public class GlobalExceptionsHandler {
 //        myErrorDetails.setDescription(webRequest.getDescription(false));
 //        return new ResponseEntity<MyErrorDetails>(myErrorDetails, HttpStatus.MULTIPLE_CHOICES);
 //    }
+  
+  @ExceptionHandler (NoHandlerFoundException.class)
+  public ResponseEntity<MyErrorDetails> noHandlerFoundExceptionHandler(NoHandlerFoundException customerException, WebRequest webRequest){
+      
+	  MyErrorDetails myErrorDetails = new MyErrorDetails();
+      
+      myErrorDetails.setLocalDateTime(LocalDateTime.now());
+      
+      myErrorDetails.setMessage(customerException.getMessage());
+     
+      myErrorDetails.setDescription(webRequest.getDescription(false));
+     
+      return new ResponseEntity<MyErrorDetails>(myErrorDetails, HttpStatus.NOT_FOUND);
+  }
+  
+  @ExceptionHandler (Exception.class)
+  public ResponseEntity<MyErrorDetails> exceptionHandler(Exception customerException, WebRequest webRequest){
+	  
+	  MyErrorDetails myErrorDetails = new MyErrorDetails();
+	  
+	  myErrorDetails.setLocalDateTime(LocalDateTime.now());
+	  
+	  myErrorDetails.setMessage(customerException.getMessage());
+	  
+	  myErrorDetails.setDescription(webRequest.getDescription(false));
+	  
+	  return new ResponseEntity<MyErrorDetails>(myErrorDetails, HttpStatus.NOT_FOUND);
+  }
 }
