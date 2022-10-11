@@ -93,6 +93,20 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 		
 	
 	}
+	@Override
+	public OrderDetails ChangeStatus(Integer OrderId) throws OrderNotFoundException {
+		
+		Optional<OrderDetails> opt = orderDetailsDao.findById(OrderId);
+		
+		if(opt.isPresent()) {
+			OrderDetails orderDetails = opt.get();
+			
+			orderDetails.setOrderStatus("Completed");
+			return orderDetailsDao.save(orderDetails);
+		}else {
+			throw new OrderNotFoundException("Order Not Found");
+		}
+	}
 	
 
 	

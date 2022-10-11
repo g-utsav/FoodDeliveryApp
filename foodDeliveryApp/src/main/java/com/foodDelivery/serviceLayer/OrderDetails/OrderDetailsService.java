@@ -24,6 +24,8 @@ public interface OrderDetailsService {
 
 	public OrderDetails updateOrder (OrderDetails order)throws OrderNotFoundException;
 	
+	public  OrderDetails ChangeStatus (Integer OrderId) throws OrderNotFoundException;
+	
 	//public List <OrderDetails> viewAllOrderByResturant (Resturant rest) ;
 	
 }

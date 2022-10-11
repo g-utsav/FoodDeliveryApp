@@ -48,10 +48,12 @@ public class OrderDetailsController {
 	
 	
 	
+
 	@PostMapping("/")
-	public ResponseEntity<OrderDetails> AddOrderDetailsHandler(@Valid @RequestBody CustomerDTOForHttpRequest cDtoHttp) throws UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException{
+	public ResponseEntity<OrderDetails> AddOrderDetailsHandler(@Valid @RequestBody CustomerDTOForHttpRequest cDtoHttp) throws UserAccessNotGrantedException, UserNotFound, UserNotLoggedInException, CustomerNotFoundException {
 		if(adminServ.verifyUser(cDtoHttp.getcToken())) ;
 		return new ResponseEntity<OrderDetails> (orderDetailsService.AddOrder(cDtoHttp.getCustomer()),HttpStatus.ACCEPTED);
+
 	}
 	
 	@DeleteMapping("/")
@@ -77,6 +79,12 @@ public class OrderDetailsController {
 
 			if(!adminServ.verifyAdmin(orderdetailsDto.getCustomerToken(), orderdetailsDto.getCustomerToken().getCustId())) ;
 			return new ResponseEntity<OrderDetails>(orderDetailsService.updateOrder(orderdetailsDto.getOrderdetails()), HttpStatus.ACCEPTED);
+	}
+	@PutMapping("/changestatus")
+	public ResponseEntity<OrderDetails>changeOrderStatusHandler(@Valid @RequestBody OrderDetailsDto orderdetailsDto) throws AdminAcessNotGrantedException,OrderNotFoundException{
+		
+		if(!adminServ.verifyAdmin(orderdetailsDto.getCustomerToken(), orderdetailsDto.getCustomerToken().getCustId())) ;
+		return new ResponseEntity<OrderDetails>(orderDetailsService.ChangeStatus(orderdetailsDto.getOrderdetails().getOrderId()), HttpStatus.ACCEPTED);
 	}
 	
 }
